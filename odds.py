@@ -11,6 +11,16 @@ class Odds(Decimal):
     a range of other odds formats
     """
 
+    STANDARD_FRACTIONALS = (odds_against := [
+        *[f"{x}/1" for x in range(1, 11)],
+        *[f"{x}/1" for x in range(12, 23, 2)],
+        *[f"{x}/1" for x in [25, 33, 40, 50, 66, 80, 100, 150, 200, 250, 500, 1000]],
+        *[f"{x}/2" for x in range(5, 17, 2)],
+        *[f"{x}/4" for x in range(5, 13, 4)],
+        *[f"{x}/8" for x in range(11, 17, 2)],
+        *['10/3', '6/4', '11/10'],
+    ]) + ['/'.join(x.split('/')[::-1]) for x in odds_against[1:]]  # [1:] removes 1/1 so it doesn't duplicate
+
     # Class methods
 
     @classmethod
@@ -155,7 +165,7 @@ class Odds(Decimal):
     def to_fractional(self, fractional_set: List[Tuple[int, int]], delim: str) -> str:
         ...
 
-    def to_fractional(self, fractional_set, delim='/'):
+    def to_fractional(self, fractional_set=STANDARD_FRACTIONALS, delim='/'):
         """Returns Odds instance as a fractional string with the given delimiter (default '/').
         The return value will be the closest equivalent value found in the given fractional_set.
 

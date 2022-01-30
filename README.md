@@ -30,8 +30,9 @@ o.to_probability()  # 0.4
 ```
 
 The to_fractional() method requires a set of fractional odds to work from. It will then select the item from the set of odds
-that most closely matches.
+that most closely matches. For convenience, a set of standard odds has been provided.
 
 ```
 o.to_fractional('5/4', '6/4', '7/4', '2/1') # 6/4
+o.to_fractional(Odds.STANDARD_FRACTIONALS) # 6/4
 ```

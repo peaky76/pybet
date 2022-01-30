@@ -6,6 +6,15 @@ from unittest import TestCase
 
 class TestOdds(TestCase):
 
+    def test_odds_standard_fractionals_contains_odds_on(self):
+        self.assertTrue('2/5' in Odds.STANDARD_FRACTIONALS)
+
+    def test_odds_standard_fractionals_contains_odds_against_short(self):
+        self.assertTrue('5/2' in Odds.STANDARD_FRACTIONALS)
+
+    def test_odds_standard_fractionals_contains_odds_against_long(self):
+        self.assertTrue('66/1' in Odds.STANDARD_FRACTIONALS)
+
     def test_odds_can_init_with_decimal(self):
         self.assertEqual(3.25, Odds(Decimal('3.25')))
 
@@ -190,6 +199,15 @@ class TestOdds(TestCase):
         odds_set = ['3/1', '13/4', '10/3', '7/2', '4/1']
         odds = Odds(4.27)
         self.assertEqual('13:4', odds.to_fractional(odds_set, ':'))
+
+    def test_odds_to_fractional_with_standard_fractionals_constants(self):
+        odds_set = Odds.STANDARD_FRACTIONALS
+        odds = Odds(5)
+        self.assertEqual('4/1', odds.to_fractional(odds_set))
+
+    def test_odds_to_fractional_uses_standard_fractionals_as_default_if_not_specified(self):
+        odds = Odds(5)
+        self.assertEqual('4/1', odds.to_fractional())
 
     def test_odds_to_fractional_raises_error_with_no_fractional_set(self):
         self.assertRaises(ValueError, lambda: Odds('4.30').to_fractional([]))
