@@ -15,6 +15,8 @@ This initial release contains an Odds class which enables conversion from and to
 * Implied percentage, e.g. 40 
 * Implied probability, e.g. 0.4
 
+For a basic guide to odds, please see [https://www.investopedia.com/articles/investing/042115/betting-basics-fractional-decimal-american-moneyline-odds.asp]
+
 Internally, the value of an Odds instance is stored as a Decimal, making decimal odds the effective default. 
 Odds can be instantiated directly as decimals or via a class method, specifying the type of odds being instantiated from. 
 Any Odds instance can then be output to any type with a to_{type} method, e.g.
@@ -52,6 +54,12 @@ There are properties to compare Odds instances to evens, and a convenience metho
 o.is_odds_against   # True
 o.is_odds_on        # True
 Odds.evens() == 2   # True
+```
+
+It is possible to invert odds, to turn odds against into the equivalent odds on value and vice versa, e.g.
+
+```
+Odds.inverted(2.5) == Odds.fractional(4, 6)  # True
 ```
 
 There are also operators to perform calculations with Odds instances, though this is more useful in some cases than others.
