@@ -15,7 +15,11 @@ This initial release contains an Odds class which enables conversion from and to
 * Implied percentage, e.g. 40 
 * Implied probability, e.g. 0.4
 
+and a Market class which allows for the creation of markets based on those odds and some limited calculations on those markets
+
 For a basic guide to odds, please see [https://www.investopedia.com/articles/investing/042115/betting-basics-fractional-decimal-american-moneyline-odds.asp]
+
+### Odds
 
 Internally, the value of an Odds instance is stored as a Decimal, making decimal odds the effective default. 
 Odds can be instantiated directly as decimals or via a class method, specifying the type of odds being instantiated from. 
@@ -67,4 +71,45 @@ For example, it is possible to calculate the combined odds of two 3/1 shots as f
 
 ```
 Odds.fractional(3, 1) + Odds.fractional(3, 1) == Odds.evens  # True
+```
+
+### Market
+
+A Market is a dictionary of "runners" (which can be of any type) and Odds. A market also has a places attribute. The
+default for this is 1 (i.e. a win market), but it can be set to any value.
+
+A Market can be instantiated any way a python dictionary can. Given a list of runners and odds a market can be created like this:
+
+```
+runners = ['Frankel', 'Sea The Stars', 'Brigadier Gerard', 'Dancing Brave', 'Quixall Crossett']
+odds = [Odds(x) for x in [2, 4, 5, 10, 1000]]
+market = Market(zip(runners, odds))
+```
+Alternatively, the market could be created runner by runner...
+
+```
+market = Market()
+market['Frankel'] = Odds(2)
+```
+
+You may also wish to create an "empty" market, to assign odds later:
+```
+market = Market.fromkeys(runners)
+```
+Markets have a number of properties:
+
+* ```favourites``` - a list of the shortest price runners in the market (NB: It will always be a list, even if there is only one)
+* ```percentage``` - the sum of every runner's implied percentage chance
+* ```overround_per_runner``` - the above, divided by the number of runners
+* ```is_overbroke``` - true if the market is in the punter's favour, i.e. < 100% book, false otherwise
+* ```is_overround``` - true if the market is in the bookie's favour, i.e. > 100% book, false otherwise
+* ```is_fair``` - only true if the book is at exactly 100%
+
+One further method - ```without``` allows the user to extract runners from markets. In its current state, it is of little practical use, as it just
+extracts the runners, normally leaving an overbroke market. In future releases, this will be enhanced to automatically recalculate.
+
+```
+market = Market(zip(runners, odds))
+market = market.without(['Frankel'])
+market.favourites == ['Sea The Stars']  # True
 ```
