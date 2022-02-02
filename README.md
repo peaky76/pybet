@@ -66,6 +66,15 @@ It is possible to invert odds, to turn odds against into the equivalent odds on 
 Odds.inverted(2.5) == Odds.fractional(4, 6)  # True
 ```
 
+It is also possible to get the odds "to one" i.e. the numerator of fractional odds, but with a decimal numerator if that is applicable, 
+or, put another way, the fractional odds with the stake removed.
+
+```
+Odds.fractional(5, 1).to_one() == 5     # True
+Odds.fractional(9, 4).to_one() == 2.25  # True
+Odds(3.25).to_one() == 2.25             # True  
+```
+
 There are also operators to perform calculations with Odds instances, though this is more useful in some cases than others.
 For example, it is possible to calculate the combined odds of two 3/1 shots as follows:
 
