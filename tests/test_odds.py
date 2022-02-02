@@ -232,3 +232,9 @@ class TestOdds(TestCase):
 
     def test_odds_to_probability(self):
         self.assertAlmostEqual(Decimal('0.3077'), Odds.fractional(9, 4).to_probability(), places=4)
+
+    def test_odds_shorten(self):
+        self.assertEqual(2, Odds.percentage(40).shorten(10))
+
+    def test_odds_lengthen(self):
+        self.assertAlmostEqual(Decimal('3.3333'), Odds.percentage(40).lengthen(10), places=4)

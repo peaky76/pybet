@@ -218,3 +218,25 @@ class Odds(Decimal):
             0.2
         """
         return 1 / self
+    
+    def shorten(self, percentage_points: Decimal) -> Decimal:
+        """Decreases the chance represented by the current Odds instance
+        by the specified number of percentage points and returns a new
+        Odds instance with that value, i.e. "shortening" the odds
+
+        Example:
+            >>> Odds(5).shorten(5)
+            4
+        """
+        return Odds.percentage(self.to_percentage() + percentage_points)
+
+    def lengthen(self, percentage_points: Decimal) -> Decimal:
+        """Decreases the chance represented by the current Odds instance
+        by the specified number of percentage points and returns a new
+        Odds instance with that value, i.e. "lengthening" the odds
+
+        Example:
+            >>> Odds(4).lengthen(5)
+            5
+        """
+        return Odds.percentage(self.to_percentage() - percentage_points)
