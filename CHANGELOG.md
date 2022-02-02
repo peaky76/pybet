@@ -18,3 +18,14 @@ The versioning refers to the versions on pypi
 - ```.is_odds_against``` and ```.is_odds_on``` properties
 - Dunder methods for ```__str__, __add__, __mul__, __rmul__, __true_div__```
 - ```STANDARD_FRACTIONALS``` constant 
+
+## [0.2.0] - 2022-02-02
+### Added
+- ```Market``` class
+* ```favourites``` property
+* ```percentage``` property
+* ```overround_per_runner``` property
+* ```is_overbroke``` property
+* ```is_overround``` property
+* ```is_fair``` property
+* ```without``` instance method
