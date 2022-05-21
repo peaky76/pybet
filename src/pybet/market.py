@@ -68,5 +68,4 @@ class Market(dict):
 
     def without(self, runners: List[Any]) -> Market:
         """Returns a new market with the specified runners removed"""
-        new_items = {key: value for key, value in self.items() if key not in runners}
-        return Market(zip(new_items.keys(), new_items.values()))
+        return Market({key: value for key, value in self.items() if key not in runners})

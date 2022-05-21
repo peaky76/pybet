@@ -1,6 +1,6 @@
 from decimal import Decimal
 from fractions import Fraction
-from src.pybet import Odds
+from pybet.src.pybet import Odds
 from unittest import TestCase
 
 
