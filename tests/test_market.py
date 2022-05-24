@@ -46,9 +46,33 @@ class MarketTestCase(TestCase):
         market = {'alpha': Odds(4), 'beta': Odds(4), 'gamma': Odds(4), 'delta': Odds(5)}
         self.assertTrue(Market(market).is_overbroke)
 
+    def test_market_apply_margin_positive_correctly_updates_overround(self):
+        self.market.apply_margin(10)
+        self.assertAlmostEqual(self.market.percentage, Decimal(110), places=0)
+
+    def test_market_apply_margin_positive_correctly_updates_favourite(self):
+        self.market.apply_margin(10)
+        self.assertAlmostEqual(self.market.get('alpha'), Decimal(1.909), places=3)
+
+    def test_market_apply_margin_positive_correctly_updates_outsider(self):
+        self.market.apply_margin(10)
+        self.assertAlmostEqual(self.market.get('delta'), Decimal(9.545), places=3)
+
+    def test_market_apply_margin_negative_correctly_updates_overround(self):
+        self.market.apply_margin(-10)
+        self.assertAlmostEqual(self.market.percentage, Decimal(90), places=0)
+
+    def test_market_apply_margin_negative_correctly_updates_favourite(self):
+        self.market.apply_margin(-10)
+        self.assertAlmostEqual(self.market.get('alpha'), Decimal(2.333), places=3)
+
+    def test_market_apply_margin_negative_correctly_updates_outsider(self):
+        self.market.apply_margin(-10)
+        self.assertAlmostEqual(self.market.get('delta'), Decimal(11.667), places=3)
+
     def test_market_share_for(self):
         self.assertAlmostEqual(self.market.share_for('alpha'), Decimal(47.62), places=2)
-        
+  
     def test_market_without(self):
         new_market = self.market.without(['alpha', 'gamma'])
         self.assertEqual(len(new_market), 2)
