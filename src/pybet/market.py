@@ -56,7 +56,7 @@ class Market(dict):
 
     @property
     def is_overbroke(self) -> bool:
-        """Returns true if market as a whole in backer's favour, false otherwise """
+        """Returns true if market as a whole in backer's favour, false otherwise"""
         return self.percentage < self._fair_percentage
 
     @property
@@ -65,7 +65,16 @@ class Market(dict):
         return 100 * self.places
 
     # Instance methods
-    
+
+    def apply_margin(self, margin: Decimal) -> Market:
+        """Returns a revised market where each runner has the specified margin applied to
+        their 'fair' price, i.e. the price they would be in a 100% book
+        """
+        adjustment = (100 + margin) / self.percentage
+        for runner, odds in self.items():
+            self[runner] = Odds(Decimal(odds) / adjustment)
+        return self
+
     def share_for(self, runner: Any) -> Decimal:
         """Returns the market share for the specified runner, i.e. the percentage of the
         theoretical market which is attributable to that runner
