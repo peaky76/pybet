@@ -65,6 +65,12 @@ class Market(dict):
         return 100 * self.places
 
     # Instance methods
+    
+    def share_for(self, runner: Any) -> Decimal:
+        """Returns the market share for the specified runner, i.e. the percentage of the
+        theoretical market which is attributable to that runner
+        """
+        return (self[runner].to_percentage() / self.percentage) * 100
 
     def without(self, runners: List[Any]) -> Market:
         """Returns a new market with the specified runners removed"""
