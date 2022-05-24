@@ -75,6 +75,12 @@ class Market(dict):
             self[runner] = Odds(Decimal(odds) / adjustment)
         return self
 
+    def clear(self):
+        """Nulls all odds, restoring an empty market"""
+        for runner in self.keys():
+            self[runner] = None
+        return self
+
     def share_for(self, runner: Any) -> Decimal:
         """Returns the market share for the specified runner, i.e. the percentage of the
         theoretical market which is attributable to that runner

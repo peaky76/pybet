@@ -70,9 +70,13 @@ class MarketTestCase(TestCase):
         self.market.apply_margin(-10)
         self.assertAlmostEqual(self.market.get('delta'), Decimal(11.667), places=3)
 
+    def test_market_clear(self):
+        self.market.clear()
+        self.assertIsNone(self.market.get('alpha'))
+
     def test_market_share_for(self):
         self.assertAlmostEqual(self.market.share_for('alpha'), Decimal(47.62), places=2)
-  
+
     def test_market_without(self):
         new_market = self.market.without(['alpha', 'gamma'])
         self.assertEqual(len(new_market), 2)
