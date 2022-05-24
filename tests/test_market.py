@@ -46,6 +46,9 @@ class MarketTestCase(TestCase):
         market = {'alpha': Odds(4), 'beta': Odds(4), 'gamma': Odds(4), 'delta': Odds(5)}
         self.assertTrue(Market(market).is_overbroke)
 
+    def test_market_share_for(self):
+        self.assertAlmostEqual(self.market.share_for('alpha'), Decimal(47.62), places=2)
+        
     def test_market_without(self):
         new_market = self.market.without(['alpha', 'gamma'])
         self.assertEqual(len(new_market), 2)
