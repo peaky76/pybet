@@ -95,7 +95,7 @@ class Market(dict):
         return self
 
     def fill(self, margin: Decimal = 0) -> Market:
-        """Fills out null odds in the market proportionately so that 5the specified
+        """Fills out null odds in the market proportionately so that the specified
         margin is achieved
         """
         unpriced_runners = [runner for runner in self.keys() if self.get(runner) is None]
@@ -118,5 +118,4 @@ class Market(dict):
 
     def without(self, runners: List[Any]) -> Market:
         """Returns a new market with the specified runners removed"""
-        new_items = {key: value for key, value in self.items() if key not in runners}
-        return Market(zip(new_items.keys(), new_items.values()))
+        return Market({key: value for key, value in self.items() if key not in runners})
