@@ -73,6 +73,10 @@ class MarketTestCase(TestCase):
     def test_market_clear(self):
         self.market.clear()
         self.assertIsNone(self.market.get('alpha'))
+        
+    def test_market_equalise(self):
+        self.market.equalise()
+        self.assertEqual(self.market.get('alpha'), 4)
 
     def test_market_fill_assigns_correct_value_to_missing_odds_with_default_margin(self):
         market = Market({'alpha': Odds(3), 'beta': Odds(3), 'gamma': None})

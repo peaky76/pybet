@@ -69,7 +69,7 @@ class Market(dict):
     def apply_margin(self, margin: Decimal) -> Market:
         """Returns a revised market with the specified margin built in to each runner's price,
         and thus to the overround. It is not applied cumulatively, i.e. a 10% margin applied
-        to a market with a 105% overround, will become a 110% market, not 115%.  
+        to a market with a 105% overround, will become a 110% market, not 115%.
 
         Example:
             >>> market = Market({'Frankel': 3, 'Sea The Stars': 3, 'Nijinsky': 3})
@@ -88,8 +88,14 @@ class Market(dict):
             self[runner] = None
         return self
 
+    def equalise(self):
+        """Resets the market so that all runners have equal odds with no overround"""
+        self.clear()
+        self.fill()
+        return self
+
     def fill(self, margin: Decimal = 0) -> Market:
-        """Fills out null odds in the market proportionately so that the specified
+        """Fills out null odds in the market proportionately so that 5the specified
         margin is achieved
         """
         unpriced_runners = [runner for runner in self.keys() if self.get(runner) is None]
