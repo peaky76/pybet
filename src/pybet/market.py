@@ -82,13 +82,13 @@ class Market(dict):
             self[runner] = Odds(Decimal(odds) / adjustment)
         return self
 
-    def clear(self):
+    def clear(self) -> Market:
         """Nulls all odds, restoring an empty market"""
         for runner in self.keys():
             self[runner] = None
         return self
 
-    def equalise(self):
+    def equalise(self) -> Market:
         """Resets the market so that all runners have equal odds with no overround"""
         self.clear()
         self.fill()
