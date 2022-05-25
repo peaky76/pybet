@@ -95,7 +95,7 @@ class Market(dict):
         return self
 
     def fill(self, margin: Decimal = 0) -> Market:
-        """Fills out null odds in the market proportionately so that 5the specified
+        """Fills out null odds in the market proportionately so that the specified
         margin is achieved
         """
         unpriced_runners = [runner for runner in self.keys() if self.get(runner) is None]
