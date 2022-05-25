@@ -67,8 +67,15 @@ class Market(dict):
     # Instance methods
 
     def apply_margin(self, margin: Decimal) -> Market:
-        """Returns a revised market where each runner has the specified margin applied to
-        their 'fair' price, i.e. the price they would be in a 100% book
+        """Returns a revised market with the specified margin built in to each runner's price,
+        and thus to the overround. It is not applied cumulatively, i.e. a 10% margin applied
+        to a market with a 105% overround, will become a 110% market, not 115%.  
+
+        Example:
+            >>> market = Market({'Frankel': 3, 'Sea The Stars': 3, 'Nijinsky': 3})
+            >>> market.apply_margin(20)
+            >>> market.get('Frankel')
+            2.5
         """
         adjustment = (100 + margin) / self.percentage
         for runner, odds in self.items():
