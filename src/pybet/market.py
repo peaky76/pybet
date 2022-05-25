@@ -88,6 +88,22 @@ class Market(dict):
             self[runner] = None
         return self
 
+    def fill(self, margin: Decimal = 0) -> Market:
+        """Fills out null odds in the market proportionately so that the specified
+        margin is achieved
+        """
+        unpriced_runners = [runner for runner in self.keys() if self.get(runner) is None]
+        missing_percentage = (100 + margin) - self.without(unpriced_runners).percentage
+
+        if missing_percentage <= 0:
+            raise ValueError('Market already equals or exceeds specified margin')
+
+        odds_to_apply = Odds.percentage(missing_percentage / len(unpriced_runners))
+        for runner in unpriced_runners:
+            self[runner] = odds_to_apply
+
+        return self
+
     def share_for(self, runner: Any) -> Decimal:
         """Returns the market share for the specified runner, i.e. the percentage of the
         theoretical market which is attributable to that runner

@@ -74,6 +74,21 @@ class MarketTestCase(TestCase):
         self.market.clear()
         self.assertIsNone(self.market.get('alpha'))
 
+    def test_market_fill_assigns_correct_value_to_missing_odds_with_default_margin(self):
+        market = Market({'alpha': Odds(3), 'beta': Odds(3), 'gamma': None})
+        market.fill()
+        self.assertAlmostEqual(market.get('gamma'), Decimal(3), places=0)
+
+    def test_market_fill_assigns_correct_value_to_missing_odds_with_specified_margin(self):
+        market = Market({'alpha': Odds(3), 'beta': Odds(3), 'gamma': None})
+        market.fill(10)
+        self.assertAlmostEqual(market.get('gamma'), Decimal(2.308), places=3)
+
+    def test_market_fill_raises_error_when_specified_margin_already_exceeded(self):
+        market = Market({'alpha': Odds(3), 'beta': Odds(3), 'gamma': None})
+        market.fill(-10)
+        self.assertRaises(ValueError)
+
     def test_market_share_for(self):
         self.assertAlmostEqual(self.market.share_for('alpha'), Decimal(47.62), places=2)
 
