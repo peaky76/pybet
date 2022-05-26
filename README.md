@@ -114,11 +114,86 @@ Markets have a number of properties:
 * ```is_overround``` - true if the market is in the bookie's favour, i.e. > 100% book, false otherwise
 * ```is_fair``` - only true if the book is at exactly 100%
 
-One further method - ```without``` allows the user to extract runners from markets. In its current state, it is of little practical use, as it just
+They also have a number of methods. The following market is used in the explanation of them:
+
+```
+market = Market({'Frankel': 2, 'Sea the Stars': 3, 'Brigadier Gerard': 6})
+```
+
+#### ```apply_margin``` 
+
+Allows the user to manipulate the overround on a market. For example, in the 'fair' market given above, applying a margin of 20% as follows:
+
+```
+market.apply_margin(20)
+```
+
+will change the odds in the following way:
+
+```
+market.get('Frankel')           # 1.667 (to 3 dp)
+market.get('Sea The Stars')     # 2.5
+market.get('Brigadier Gerard')  # 5
+market.percentage               # 120
+```
+
+Note that the method applies the margin in proportion to each runner's current odds.
+
+#### ```equalise```
+
+Resets the market to a fair market where all runners have the same odds.
+
+```
+market.equalise()
+market.get('Frankel')           # 3
+market.get('Sea The Stars')     # 3
+market.get('Brigadier Gerard')  # 3
+market.percentage               # 100
+```
+
+#### ```fill```
+
+Fills out any missing odds in the market to the specified margin.
+
+```
+market['Frankel'] = None
+market.fill(10)
+market.get('Frankel')           # 1.667 (to 3 dp)
+```
+
+That is, the odds of Sea The Stars (3) and Brigadier Gerard (6) represent a 50% market. To fill out the entire market to a 10% margin requires Frankel's odds to be 60% or 1.667. If there were three unpriced runners, they'd all be set to 20% or 5.
+
+Where no margin is specified, a 100% market is assumed.
+
+```
+market['Frankel'] = None
+market.fill()
+market.get('Frankel')           # 2
+```
+
+#### ```share_for```
+
+Returns the market share for the specified horse.
+
+```
+market.share_for('Frankel')     # 50
+```
+
+#### ```wipe```
+
+Clears the market, setting all odds to none. 
+
+```
+market.wipe()
+market.get('Frankel')           # None
+```
+
+#### ```without``` 
+
+Allows the user to extract runners from markets. In its current state, it is of little practical use, as it just
 extracts the runners, normally leaving an overbroke market. In future releases, this will be enhanced to automatically recalculate.
 
 ```
-market = Market(zip(runners, odds))
 market = market.without(['Frankel'])
 market.favourites == ['Sea The Stars']  # True
 ```
