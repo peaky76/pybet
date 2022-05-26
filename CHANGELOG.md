@@ -22,10 +22,19 @@ The versioning refers to the versions on pypi
 ## [0.2.0] - 2022-02-02
 ### Added
 - ```Market``` class
-* ```favourites``` property
-* ```percentage``` property
-* ```overround_per_runner``` property
-* ```is_overbroke``` property
-* ```is_overround``` property
-* ```is_fair``` property
-* ```without``` instance method
+- ```.favourites``` property
+- ```.percentage``` property
+- ```.overround_per_runner``` property
+- ```.is_overbroke``` property
+- ```.is_overround``` property
+- ```.is_fair``` property
+- ```.without``` instance method
+
+## [0.3.0] - 2022-05-26
+### Added
+#### On ```Market``` class
+- ```.apply_margin``` instance method
+- ```.equalise``` instance method
+- ```.fill``` instance method
+- ```.share_for``` instance method
+- ```.wipe``` instance method
