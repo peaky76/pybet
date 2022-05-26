@@ -82,15 +82,9 @@ class Market(dict):
             self[runner] = Odds(Decimal(odds) / adjustment)
         return self
 
-    def clear(self) -> Market:
-        """Nulls all odds, restoring an empty market"""
-        for runner in self.keys():
-            self[runner] = None
-        return self
-
     def equalise(self) -> Market:
         """Resets the market so that all runners have equal odds with no overround"""
-        self.clear()
+        self.wipe()
         self.fill()
         return self
 
@@ -115,6 +109,12 @@ class Market(dict):
         theoretical market which is attributable to that runner
         """
         return (self[runner].to_percentage() / self.percentage) * 100
+
+    def wipe(self) -> Market:
+        """Nulls all odds, restoring an empty market"""
+        for runner in self.keys():
+            self[runner] = None
+        return self
 
     def without(self, runners: List[Any]) -> Market:
         """Returns a new market with the specified runners removed"""
