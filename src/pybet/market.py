@@ -104,12 +104,6 @@ class Market(dict):
 
         return self
 
-    def share_for(self, runner: Any) -> Decimal:
-        """Returns the market share for the specified runner, i.e. the percentage of the
-        theoretical market which is attributable to that runner
-        """
-        return (self[runner].to_percentage() / self.percentage) * 100
-
     def wipe(self) -> Market:
         """Nulls all odds, restoring an empty market"""
         for runner in self.keys():

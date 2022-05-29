@@ -30,11 +30,10 @@ The versioning refers to the versions on pypi
 - ```.is_fair``` property
 - ```.without``` instance method
 
-## [0.3.0] - 2022-05-26
+## [0.3.0] - 2022-05-29
 ### Added
 #### On ```Market``` class
 - ```.apply_margin``` instance method
 - ```.equalise``` instance method
 - ```.fill``` instance method
-- ```.share_for``` instance method
 - ```.wipe``` instance method
