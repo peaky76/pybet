@@ -171,14 +171,6 @@ market.fill()
 market.get('Frankel')           # 2
 ```
 
-#### ```share_for```
-
-Returns the market share for the specified horse.
-
-```
-market.share_for('Frankel')     # 50
-```
-
 #### ```wipe```
 
 Clears the market, setting all odds to none. 

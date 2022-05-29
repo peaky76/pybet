@@ -89,9 +89,6 @@ class MarketTestCase(TestCase):
         market.fill(-10)
         self.assertRaises(ValueError)
 
-    def test_market_share_for(self):
-        self.assertAlmostEqual(self.market.share_for('alpha'), Decimal(47.62), places=2)
-
     def test_market_wipe(self):
         self.market.wipe()
         self.assertIsNone(self.market.get('alpha'))
