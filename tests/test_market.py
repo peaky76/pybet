@@ -1,5 +1,5 @@
 from decimal import Decimal
-from pybet.src.pybet import Market, Odds
+from pybet import Market, Odds
 from unittest import TestCase
 
 
