@@ -1,6 +1,22 @@
-[build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
+[tool.poetry]
+name = "pybet"
+version = "0.3.0"
+description = "A library of betting utilities to assist with calculation of bets, stakes and markets"
+license = "GPL-3.0-only"
+authors = ["Robert Peacock <robertjamespeacock@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/peaky76/pybet"
+keywords = ["betting", "gambling"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent"
 ]
-build-backend = "setuptools.build_meta"
+
+[tool.poetry.dependencies]
+python = "^3.9.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
