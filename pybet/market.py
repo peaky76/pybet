@@ -96,7 +96,7 @@ class Market(dict):
         missing_percentage = (100 + margin) - self.without(unpriced_runners).percentage
 
         if missing_percentage <= 0:
-            raise ValueError('Market already equals or exceeds specified margin')
+            raise ValueError("Market already equals or exceeds specified margin")
 
         odds_to_apply = Odds.percentage(missing_percentage / len(unpriced_runners))
         for runner in unpriced_runners:
