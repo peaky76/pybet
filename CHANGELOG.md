@@ -9,18 +9,33 @@ The versioning refers to the versions on pypi
 
 ## [Unreleased]
 
-## [0.1.0] - 2022-01-30
+## [0.4.1] - 2023-02-18
 
 ### Added
 
-- `Odds` class
-- Class methods to instantiate `Odds` from moneyline, fractional odds, implied percentage and probability
-- Instance methods to convert `Odds` to moneyline, fractional odds, implied percentage and probability
-- `.evens` class method
-- `.inverted` class method
-- `.is_odds_against` and `.is_odds_on` properties
-- Dunder methods for `__str__, __add__, __mul__, __rmul__, __true_div__`
-- `STANDARD_FRACTIONALS` constant
+- [documentation pages at readthedocs.io](https://pybet.readthedocs.io)
+
+### Other
+
+- Major internal linting, build and ci changes
+
+## [0.4.0] - 2023-01-27
+
+### Added
+
+- `staking` module
+- `staking.kelly` method
+
+## [0.3.0] - 2022-05-29
+
+### Added
+
+#### On `Market` class
+
+- `.apply_margin` instance method
+- `.equalise` instance method
+- `.fill` instance method
+- `.wipe` instance method
 
 ## [0.2.0] - 2022-02-02
 
@@ -35,20 +50,15 @@ The versioning refers to the versions on pypi
 - `.is_fair` property
 - `.without` instance method
 
-## [0.3.0] - 2022-05-29
+## [0.1.0] - 2022-01-30
 
 ### Added
 
-#### On `Market` class
-
-- `.apply_margin` instance method
-- `.equalise` instance method
-- `.fill` instance method
-- `.wipe` instance method
-
-## [0.4.0] - 2023-01-27
-
-### Added
-
-- `staking` module
-- `staking.kelly` method
+- `Odds` class
+- Class methods to instantiate `Odds` from moneyline, fractional odds, implied percentage and probability
+- Instance methods to convert `Odds` to moneyline, fractional odds, implied percentage and probability
+- `.evens` class method
+- `.inverted` class method
+- `.is_odds_against` and `.is_odds_on` properties
+- Dunder methods for `__str__, __add__, __mul__, __rmul__, __true_div__`
+- `STANDARD_FRACTIONALS` constant
