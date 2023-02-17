@@ -27,68 +27,125 @@ class Market(dict):
 
     @property
     def percentage(self) -> Decimal:
-        """Returns total market percentage of all runners"""
+        """The total market percentage of all runners
+
+        :return: The percentage market
+        :rtype: Decimal
+        """
+
         return sum([odds.to_percentage() for odds in self.values()])
 
     @property
     def overround_per_runner(self) -> Decimal:
-        """Returns excess market percentage divided by number of runners"""
+        """Excess market percentage divided by number of runners
+
+        :return: The overround per runner
+        :rtype: Decimal
+        """
+
         return (self.percentage - self._fair_percentage) / len(self)
 
     @property
     def favourites(self) -> List[Any]:
         """Returns list of runners that are favourite for the event
         Note: Will be a list even if there is only one favourite
+
+        :return: A list of market favourites
+        :rtype: List[Any]
         """
+
         return [runner for runner, odds in self.items() if odds == min(self.values())]
 
     @property
     def is_overround(self) -> bool:
-        """Returns true if market as a whole in layer's favour, false otherwise"""
+        """Whether the market is overround or not
+
+        :return: True if market as a whole in layer's favour, false otherwise
+        :rtype: bool
+        """
+
         return self.percentage > self._fair_percentage
 
     @property
     def is_fair(self) -> bool:
-        """Returns true if there is no inbuilt margin"""
+        """Whether the market has no bias in favour of backer or layer
+
+        :return: True if there is no inbuilt margin, false otherwise
+        :rtype: bool
+        """
+
         return self.percentage == self._fair_percentage
 
     @property
     def is_overbroke(self) -> bool:
-        """Returns true if market as a whole in backer's favour, false otherwise"""
+        """Whether the market has no bias in favour of bettor or layer
+
+        :return: True if market as a whole in backer's favour, false otherwise
+        :rtype: bool
+        """
+
         return self.percentage < self._fair_percentage
 
     @property
     def _fair_percentage(self) -> int:
-        """Returns the fair market percentage based on number of winning places"""
+        """What a fair percentage would be for the market based on the number of winning places
+
+        :return: The fair market percentage based on number of winning places
+        :rtype: int
+        """
+
         return 100 * self.places
 
     # Instance methods
 
     def apply_margin(self, margin: Decimal) -> Market:
-        """Returns a revised market with the specified margin built in to each runner's price,
-        and thus to the overround. It is not applied cumulatively, i.e. a 10% margin applied
-        to a market with a 105% overround, will become a 110% market, not 115%.
+        """Applies the specified margin to each runner's underlying price, and thus to the overround. It is not applied cumulatively,
+        i.e. a 10% margin applied to a market with a 105% overround, will become a 110% market, not 115%.
 
-        Example:
-            >>> market = Market({'Frankel': 3, 'Sea The Stars': 3, 'Nijinsky': 3})
-            >>> market.apply_margin(20)
-            >>> market.get('Frankel')
-            2.5
+        :param margin: The margin to apply to the market
+        :type margin: Decimal
+        :return: A revised market with the specified margin built in
+        :rtype: Market
+
+        :Example:
+            >>> market = Market({'Frankel': Odds(3), 'Sea The Stars': Odds(3), 'Nijinsky': Odds(3)})
+            >>> market.apply_margin(20).get('Frankel')
+            Decimal('2.5')
         """
+
         adjustment = (100 + margin) / self.percentage
         for runner, odds in self.items():
             self[runner] = Odds(Decimal(odds) / adjustment)
         return self
 
     def equalise(self) -> Market:
-        """Resets the market so that all runners have equal odds with no overround"""
+        """Resets a market so that all runners have equal odds with no overround
+
+        :return: A revised market with no margin built in
+        :rtype: Market
+
+        :Example:
+            >>> market = Market({'Frankel': Odds(2.5), 'Sea The Stars': Odds(2.5), 'Nijinsky': Odds(2.5), 'Dancing Brave': Odds(2.5)})
+            >>> market.equalise().get('Frankel')
+            Decimal('4')
+        """
         self.wipe()
         self.fill()
         return self
 
     def fill(self, margin: Decimal = Decimal(0)) -> Market:
-        """Fills out null odds in the market proportionately so that the specified
-        margin is achieved
+        """Fills out any missing odds in the market proportionately so that the specified margin is achieved
+
+        :param margin: The margin to build into the market, defaults to zero
+        :type margin: Decimal, optional
+        :raises ValueError: if there is already a larger margin built into the market
+        :return: A market with all missing odds filled in
+        :rtype: Market
+
+        :Example:
+            >>> market = Market({'Frankel': Odds(4), 'Sea The Stars': Odds(4), 'Nijinsky': Odds(4), 'Dancing Brave': None})
+            >>> market.fill().get('Dancing Brave')
+            Decimal('4')
         """
         unpriced_runners = [
             runner for runner in self.keys() if self.get(runner) is None
@@ -105,11 +162,34 @@ class Market(dict):
         return self
 
     def wipe(self) -> Market:
-        """Nulls all odds, restoring an empty market"""
+        """Wipe market so that none of the runners have any odds
+
+        :return: An empty market
+        :rtype: Market
+
+        :Example:
+            >>> market = Market({'Frankel': Odds(4), 'Sea The Stars': Odds(4), 'Nijinsky': Odds(4), 'Dancing Brave': Odds(4)})
+            >>> list(market.wipe().values())
+            [None, None, None, None]
+        """
+
         for runner in self.keys():
             self[runner] = None
         return self
 
     def without(self, runners: List[Any]) -> Market:
-        """Returns a new market with the specified runners removed"""
+        """Create a new market with the specified runners removed
+
+        :param runners: Runners to remove from the market
+        :type runners: List[Any]
+        :return: A new market without the specified runners
+        :rtype: Market
+
+        :Example:
+            >>> market = Market({'Frankel': Odds(4), 'Sea The Stars': Odds(4), 'Nijinsky': Odds(4), 'Dancing Brave': Odds(4)})
+            >>> new_market = market.without(['Frankel'])
+            >>> list(new_market.keys())
+            ['Sea The Stars', 'Nijinsky', 'Dancing Brave']
+        """
+
         return Market({key: value for key, value in self.items() if key not in runners})
