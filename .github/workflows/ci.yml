@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Extract python version
+        id: python-version
+        run: |
+          python_version=$(grep '^python =' pyproject.toml | awk -F'"' '{print $2}')
+          echo "::set-output name=python-version::$python_version"
+          echo "python-version=$python_version" >> $GITHUB_OUTPUT
+
+      - name: Set up python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ steps.python-version.outputs.python-version }}
+
+      - name: Install poetry
+        run: |
+          pip install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Run black
+        run: |
+          poetry run black --check --verbose .
+
+      - name: Run static type checking
+        run: |
+          poetry run mypy pybet
+
+      - name: Run tests
+        run: |
+          poetry run pytest --cov-fail-under=100
