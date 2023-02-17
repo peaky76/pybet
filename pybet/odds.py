@@ -1,5 +1,3 @@
-"""Module for the Odds class"""
-
 from __future__ import annotations
 from decimal import Decimal
 from fractions import Fraction
@@ -11,15 +9,22 @@ class Odds(Decimal):
     a range of other odds formats
     """
 
-    STANDARD_FRACTIONALS = (odds_against := [
-        *[f"{x}/1" for x in range(1, 11)],
-        *[f"{x}/1" for x in range(12, 23, 2)],
-        *[f"{x}/1" for x in [25, 33, 40, 50, 66, 80, 100, 150, 200, 250, 500, 1000]],
-        *[f"{x}/2" for x in range(5, 17, 2)],
-        *[f"{x}/4" for x in range(5, 13, 4)],
-        *[f"{x}/8" for x in range(11, 17, 2)],
-        *['10/3', '6/4', '11/10'],
-    ]) + ['/'.join(x.split('/')[::-1]) for x in odds_against[1:]]  # [1:] removes 1/1 so it doesn't duplicate
+    STANDARD_FRACTIONALS = (
+        odds_against := [
+            *[f"{x}/1" for x in range(1, 11)],
+            *[f"{x}/1" for x in range(12, 23, 2)],
+            *[
+                f"{x}/1"
+                for x in [25, 33, 40, 50, 66, 80, 100, 150, 200, 250, 500, 1000]
+            ],
+            *[f"{x}/2" for x in range(5, 17, 2)],
+            *[f"{x}/4" for x in range(5, 13, 4)],
+            *[f"{x}/8" for x in range(11, 17, 2)],
+            *["10/3", "6/4", "11/10"],
+        ]
+    ) + [
+        "/".join(x.split("/")[::-1]) for x in odds_against[1:]  # type: ignore
+    ]  # [1:] removes 1/1 so it doesn't duplicate
 
     # Class methods
 
@@ -57,10 +62,10 @@ class Odds(Decimal):
             3.25
         """
 
-        args = [arg if not isinstance(arg, str)
-                else arg.replace('-', '/')
-                        .replace(':', '/')
-                for arg in args]
+        args = [
+            arg if not isinstance(arg, str) else arg.replace("-", "/").replace(":", "/")
+            for arg in args
+        ]
         fraction = Fraction(*args)
 
         return cls(fraction.numerator / fraction.denominator + 1)
@@ -124,7 +129,7 @@ class Odds(Decimal):
     # Dunder methods
 
     def __str__(self) -> str:
-        return f'{self:.2f}'
+        return f"{self:.2f}"
 
     def __add__(self, other) -> Odds:
         return Odds.percentage(self.to_percentage() + other.to_percentage())
@@ -165,7 +170,7 @@ class Odds(Decimal):
     def to_fractional(self, fractional_set: List[Tuple[int, int]], delim: str) -> str:
         ...
 
-    def to_fractional(self, fractional_set=STANDARD_FRACTIONALS, delim='/'):
+    def to_fractional(self, fractional_set=STANDARD_FRACTIONALS, delim="/"):
         """Returns Odds instance as a fractional string with the given delimiter (default '/').
         The return value will be the closest equivalent value found in the given fractional_set.
 
@@ -181,15 +186,17 @@ class Odds(Decimal):
         if len(fractional_set) == 0:
             raise ValueError("Fractional odds set contains no odds")
 
-        fractional = Fraction(min(fractional_set, key=lambda x: abs(self - Odds.fractional(x))))
+        fractional = Fraction(
+            min(fractional_set, key=lambda x: abs(self - Odds.fractional(x)))
+        )
 
-        return f'{fractional.numerator}{delim}{fractional.denominator}'
+        return f"{fractional.numerator}{delim}{fractional.denominator}"
 
     def to_moneyline(self) -> str:
         """Returns Odds instance as a string moneyline value"""
         if self.is_odds_against:
-            return f'+{int(self.to_one() * 100)}'
-        return f'-{int(100 / self.to_one())}'
+            return f"+{int(self.to_one() * 100)}"
+        return f"-{int(100 / self.to_one())}"
 
     def to_one(self) -> Decimal:
         """Returns Odds instance as a value "to one", i.e. like fractional odds,
@@ -218,7 +225,7 @@ class Odds(Decimal):
             0.2
         """
         return 1 / self
-    
+
     def shorten(self, percentage_points: Decimal) -> Decimal:
         """Decreases the chance represented by the current Odds instance
         by the specified number of percentage points and returns a new

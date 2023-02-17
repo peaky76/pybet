@@ -1,5 +1,3 @@
-"""Module for the Market class"""
-
 from __future__ import annotations
 from decimal import Decimal
 from typing import Any, List
@@ -88,11 +86,13 @@ class Market(dict):
         self.fill()
         return self
 
-    def fill(self, margin: Decimal = 0) -> Market:
+    def fill(self, margin: Decimal = Decimal(0)) -> Market:
         """Fills out null odds in the market proportionately so that the specified
         margin is achieved
         """
-        unpriced_runners = [runner for runner in self.keys() if self.get(runner) is None]
+        unpriced_runners = [
+            runner for runner in self.keys() if self.get(runner) is None
+        ]
         missing_percentage = (100 + margin) - self.without(unpriced_runners).percentage
 
         if missing_percentage <= 0:
