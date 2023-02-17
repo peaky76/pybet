@@ -22,6 +22,6 @@ def kelly(true_odds: Odds, market_odds: Odds, bank: Decimal) -> Decimal:
     b = market_odds.to_one()
 
     kelly_percentage = (b * p - q) / b
-    stake = bank * kelly_percentage if kelly_percentage > 0.0 else 0
+    stake = Decimal(bank * kelly_percentage) if kelly_percentage > 0.0 else Decimal(0)
 
     return stake
