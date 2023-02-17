@@ -5,6 +5,7 @@ from typing import overload, List, Tuple, Union
 
 
 class FractionalOddsSets:
+    """Constant lists of fractional odds for use in Odds instances to determine the proximate fractional odds to any particular value"""
 
     STANDARD = (
         odds_against := [
@@ -25,15 +26,18 @@ class FractionalOddsSets:
 
 
 class Odds(Decimal):
-    """Allows decimal odds to be created from and converted to
-    a range of other odds formats
-    """
+    """A class that allows decimal odds to be created from and converted to a range of other odds formats"""
 
     # Class methods
 
     @classmethod
     def evens(cls) -> Odds:
-        """Creates Odds instance with value of Evens"""
+        """Convenience constructor for creating an Odds value of evens
+
+        :return: An Odds instance equal to evens
+        :rtype: Odds
+        """
+
         return cls(2)
 
     @overload
@@ -52,17 +56,19 @@ class Odds(Decimal):
         ...
 
     @classmethod
-    def fractional(cls, *args):
-        """Creates Odds instance from fraction-like input,
-        including typical odds strings like '9/4', '9-4', '9:4'
+    def fractional(cls, *args) -> Odds:
+        """Creates an Odds instance from fraction-like input, including typical odds strings like '9/4', '9-4', '9:4'
 
-        Examples:
+        :return: An Odds instance equal to the value of the fraction passed in
+        :rtype: Odds
+
+        :Example:
             >>> Odds.fractional(Fraction(9, 4))
-            3.25
+            Decimal('3.25')
             >>> Odds.fractional('9/4')
-            3.25
+            Decimal('3.25')
             >>> Odds.fractional(9, 4)
-            3.25
+            Decimal('3.25')
         """
 
         args = [
@@ -75,39 +81,61 @@ class Odds(Decimal):
 
     @classmethod
     def inverted(cls, value: Decimal) -> Odds:
-        """Creates Odds instance that is the inverse of the input value,
-        i.e. turns an odds on value into odds against and vice versa
+        """Creates an Odds instance that is the inverse of the input value, i.e. turns an odds on value into odds against and vice versa
 
-        Example:
+        :param value: A decimal representation of the odds to invert
+        :type value: Decimal
+        :return: An odds instance representing the inverse of the value passed in
+        :rtype: Odds
+
+        :Example:
             >>> Odds.inverted(5)
-            1.25
+            Decimal('1.25')
         """
+
         return cls(1 / (value - 1) + 1)
 
     @classmethod
     def moneyline(cls, value: Union[str, int]) -> Odds:
-        """Creates Odds instance from American moneyline value
+        """Creates an Odds instance from an American moneyline value
 
-        Example:
+        :param value: A representation of the moneyline value, e.g. -90
+        :type value: Union[str, int]
+        :raises ValueError: if the value is between the bounds of -100 and 100 and not suitable for moneyline values
+        :return: An odds instance representing the moneyline value passed in
+        :rtype: Odds
+
+        :Example:
             >>> Odds.moneyline(100)
-            2
-            >>> Odds.moneyline('-150')
-            1.67
+            Decimal('2.0')
+            >>> Odds.moneyline('-125')
+            Decimal('1.8')
         """
 
         value = int(value)
         if abs(value) < 100:
             raise ValueError("Moneyline must be > 100 or < -100")
 
-        return cls(value / 100 + 1) if value > 0 else cls(100 / abs(value) + 1)
+        return (
+            cls(Decimal(str(value / 100)) + 1)
+            if value > 0
+            else cls(Decimal(str(100 / abs(value))) + 1)
+        )
 
     @classmethod
     def percentage(cls, value: Decimal) -> Odds:
-        """Creates Odds instance from an equivalent percentage chance > 0 and < 100
+        """Creates an Odds instance from an equivalent percentage chance > 0 and < 100
 
-        Example:
+
+        :param value: A representation of the odds as a percentage
+        :type value: Decimal
+        :raises ValueError: if the value is not between 0 and 100%
+        :return: An odds instance representing the percentage value passed in
+        :rtype: Odds
+
+        :Example:
             >>> Odds.percentage(40)
-            2.5
+            Decimal('2.5')
         """
 
         if not 0 < value < 100:
@@ -117,11 +145,17 @@ class Odds(Decimal):
 
     @classmethod
     def probability(cls, value: Decimal) -> Odds:
-        """Creates Odds instance from an equivalent probability > 0 and < 1
+        """Creates an Odds instance from an equivalent probability > 0 and < 1
 
-        Example:
+        :param value: A representation of the odds as a probability
+        :type value: Decimal
+        :raises ValueError: if the value is not between 0 and 1
+        :return: An odds instance representing the probability passed in
+        :rtype: Odds
+
+        :Example:
             >>> Odds.probability(0.4)
-            2.5
+            Decimal('2.5')
         """
 
         if not 0 < value < 1:
@@ -132,6 +166,16 @@ class Odds(Decimal):
     # Dunder methods
 
     def __str__(self) -> str:
+        """A string representation of the odds as a decimal to two decimal places
+
+        :return: The odds to two decimal places
+        :rtype: str
+
+        :Example:
+            >>> str(Odds(3.25))
+            '3.25'
+        """
+
         return f"{self:.2f}"
 
     def __add__(self, other) -> Odds:
@@ -152,12 +196,34 @@ class Odds(Decimal):
 
     @property
     def is_odds_against(self) -> bool:
-        """Returns true for odds greater than evens, false otherwise"""
+        """Whether the Odds instance is odds against
+
+        :return: True for odds greater than evens, false otherwise
+        :rtype: bool
+
+        :Example:
+            >>> Odds(3).is_odds_against
+            True
+            >>> Odds(0.33).is_odds_against
+            False
+        """
+
         return self > 2
 
     @property
     def is_odds_on(self) -> bool:
-        """Returns true for odds less than evens, false otherwise"""
+        """Whether the Odds instance is odds against
+
+        :return: True for odds less than evens, false otherwise
+        :rtype: bool
+
+        :Example:
+            >>> Odds(0.33).is_odds_on
+            True
+            >>> Odds(3).is_odds_on
+            False
+        """
+
         return self < 2
 
     # Instance methods
@@ -173,11 +239,22 @@ class Odds(Decimal):
     def to_fractional(self, fractional_set: List[Tuple[int, int]], delim: str) -> str:
         ...
 
-    def to_fractional(self, fractional_set=FractionalOddsSets.STANDARD, delim="/"):
-        """Returns Odds instance as a fractional string with the given delimiter (default '/').
+    def to_fractional(
+        self, fractional_set: List[str] = FractionalOddsSets.STANDARD, delim="/"
+    ) -> str:
+
+        """Returns an Odds instance as a fractional string with the given delimiter (default '/').
         The return value will be the closest equivalent value found in the given fractional_set.
 
-        Example:
+        :param fractional_set: A set of fractional odds to select from, defaults to standard UK fractionals
+        :type fractional_set: List[str], optional
+        :param delim: A delimiter for the odds string, defaults to "/"
+        :type delim: str, optional
+        :raises ValueError: if the odds set provided is empty
+        :return: A string representation of the odds in fractional form
+        :rtype: str
+
+        :Example:
             >>> odds_set = ['3/1', '10/3', '7/2']
             >>> Odds(4.27).to_fractional(odds_set)
             '10/3'
@@ -196,57 +273,87 @@ class Odds(Decimal):
         return f"{fractional.numerator}{delim}{fractional.denominator}"
 
     def to_moneyline(self) -> str:
-        """Returns Odds instance as a string moneyline value"""
+        """Returns an Odds instance as a string moneyline value
+
+        :return: An Odds instance in moneyline format
+        :rtype: str
+
+        :Example:
+            >>> Odds.evens().to_moneyline()
+            '-100'
+        """
+
         if self.is_odds_against:
             return f"+{int(self.to_one() * 100)}"
         return f"-{int(100 / self.to_one())}"
 
     def to_one(self) -> Decimal:
-        """Returns Odds instance as a value "to one", i.e. like fractional odds,
-        but the numerator can be a decimal
+        """Returns Odds instance as a value "to one", i.e. like fractional odds, but the numerator can be a decimal
 
-        Example:
+        :return: The Odds instance adjusted to a "to one" value
+        :rtype: Decimal
+
+        :Example:
             >>> Odds(5).to_one()
-            4
+            Decimal('4')
         """
+
         return self - 1
 
     def to_percentage(self) -> Decimal:
-        """Returns Odds instance as an equivalent percentage chance
+        """Returns an Odds instance as an equivalent percentage chance
 
-        Example:
-            >>> Odds(2).to_percentage()
-            50
+        :return: The Odds instance as a percentage
+        :rtype: Decimal
+
+        :Example:
+            >>> Odds(5).to_percentage()
+            Decimal('20')
         """
+
         return 100 / self
 
     def to_probability(self) -> Decimal:
-        """Returns Odds instance as an equivalent probability
+        """Returns an Odds instance as an equivalent probability
 
-        Example:
+        :return: The Odds instance as a probability
+        :rtype: Decimal
+
+        :Example:
             >>> Odds(5).to_probability()
-            0.2
+            Decimal('0.2')
         """
+
         return 1 / self
 
-    def shorten(self, percentage_points: Decimal) -> Decimal:
-        """Decreases the chance represented by the current Odds instance
-        by the specified number of percentage points and returns a new
-        Odds instance with that value, i.e. "shortening" the odds
+    def shorten(self, percentage_points: Decimal) -> Odds:
+        """Decreases the chance represented by the current Odds instance by the specified number of
+        percentage points and returns a new Odds instance with that value, i.e. "shortening" the odds
 
-        Example:
+        :param percentage_points: Number of percentage points by which to decrease the chance represented by the Odds
+        :type percentage_points: Decimal
+        :return: A new Odds instance
+        :rtype: Decimal
+
+        :Example:
             >>> Odds(5).shorten(5)
-            4
+            Decimal('4')
         """
+
         return Odds.percentage(self.to_percentage() + percentage_points)
 
     def lengthen(self, percentage_points: Decimal) -> Decimal:
-        """Decreases the chance represented by the current Odds instance
-        by the specified number of percentage points and returns a new
-        Odds instance with that value, i.e. "lengthening" the odds
+        """Increases the chance represented by the current Odds instance by the specified number of
+        percentage points and returns a new Odds instance with that value, i.e. "lengthening" the odds
 
-        Example:
+        :param percentage_points: Number of percentage points by which to increase the chance represented by the Odds
+        :type percentage_points: Decimal
+        :return: A new Odds instance
+        :rtype: Decimal
+
+        :Example:
             >>> Odds(4).lengthen(5)
-            5
+            Decimal('5')
         """
+
         return Odds.percentage(self.to_percentage() - percentage_points)
