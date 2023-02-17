@@ -79,11 +79,11 @@ There are also operators to perform calculations with Odds instances, though thi
 For example, it is possible to calculate the combined odds of two 3/1 shots as follows:
 
 .. code-block:: python
-    
+
    Odds.fractional(3, 1) + Odds.fractional(3, 1) == Odds.evens  # True
 
 Market
-------
+^^^^^^
 
 A Market is a dictionary of "runners" (which can be of any type) and Odds. A market also has a places attribute. The
 default for this is 1 (i.e. a win market), but it can be set to any value.
@@ -126,7 +126,7 @@ They also have a number of methods. The following market is used in the explanat
 
 
 `apply_margin`
-^^^^^^^^^^^^^^
+""""""""""""""
 
 Allows the user to manipulate the overround on a market. For example, in the 'fair' market given above, applying a margin of 20% as follows:
 
@@ -147,7 +147,7 @@ will change the odds in the following way:
 Note that the method applies the margin in proportion to each runner's current odds.
 
 `equalise`
-^^^^^^^^^^
+""""""""""
 
 Resets the market to a fair market where all runners have the same odds.
 
@@ -160,7 +160,7 @@ Resets the market to a fair market where all runners have the same odds.
    market.percentage               # 100
 
 `fill`
-^^^^^^
+""""""
 
 Fills out any missing odds in the market to the specified margin.
 
@@ -181,7 +181,7 @@ Where no margin is specified, a 100% market is assumed.
    market.get('Frankel')           # 2
 
 `wipe`
-^^^^^^
+""""""
 
 Clears the market, setting all odds to none.
 
@@ -191,7 +191,7 @@ Clears the market, setting all odds to none.
    market.get('Frankel')           # None
 
 `without`
-^^^^^^^^^
+"""""""""
 
 Allows the user to extract runners from markets. In its current state, it is of little practical use, as it just
 extracts the runners, normally leaving an overbroke market. In future releases, this will be enhanced to automatically recalculate.
@@ -202,12 +202,12 @@ extracts the runners, normally leaving an overbroke market. In future releases, 
    market.favourites == ['Sea The Stars']  # True
 
 Staking
--------
+^^^^^^^
 
 The `staking` module contains methods for calculating stakes for a given set of odds and bank size.
 
 `kelly`
-^^^^^^^
+"""""""
 
 This method calculates the correct stake according to the [Kelly Criterion](https://www.investopedia.com/articles/investing/042115/betting-basics-fractional-decimal-american-moneyline-odds.asp) for a given bank size. If the odds are in the bettor's favour, this will be positive.
 If they aren't the method will return zero.
