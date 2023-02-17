@@ -55,13 +55,13 @@ class TestOdds(TestCase):
         self.assertEqual(1.5, Odds.inverted(Odds(3)))
 
     def test_odds_can_init_with_moneyline_positive(self):
-        self.assertEqual(2.38, Odds.moneyline(138))
+        self.assertAlmostEqual(Decimal(2.38), Odds.moneyline(138), places=2)
 
     def test_odds_can_init_with_moneyline_negative(self):
         self.assertAlmostEqual(Decimal(1.67), Odds.moneyline(-150), places=2)
 
     def test_odds_can_init_with_moneyline_string_positive(self):
-        self.assertEqual(2.38, Odds.moneyline("+138"))
+        self.assertAlmostEqual(Decimal(2.38), Odds.moneyline("+138"), places=2)
 
     def test_odds_can_init_with_moneyline_string_negative(self):
         self.assertAlmostEqual(Decimal(1.67), Odds.moneyline("-150"), places=2)
