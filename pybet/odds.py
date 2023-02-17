@@ -4,12 +4,9 @@ from fractions import Fraction
 from typing import overload, List, Tuple, Union
 
 
-class Odds(Decimal):
-    """Allows decimal odds to be created from and converted to
-    a range of other odds formats
-    """
+class FractionalOddsSets:
 
-    STANDARD_FRACTIONALS = (
+    STANDARD = (
         odds_against := [
             *[f"{x}/1" for x in range(1, 11)],
             *[f"{x}/1" for x in range(12, 23, 2)],
@@ -25,6 +22,12 @@ class Odds(Decimal):
     ) + [
         "/".join(x.split("/")[::-1]) for x in odds_against[1:]  # type: ignore
     ]  # [1:] removes 1/1 so it doesn't duplicate
+
+
+class Odds(Decimal):
+    """Allows decimal odds to be created from and converted to
+    a range of other odds formats
+    """
 
     # Class methods
 
@@ -170,7 +173,7 @@ class Odds(Decimal):
     def to_fractional(self, fractional_set: List[Tuple[int, int]], delim: str) -> str:
         ...
 
-    def to_fractional(self, fractional_set=STANDARD_FRACTIONALS, delim="/"):
+    def to_fractional(self, fractional_set=FractionalOddsSets.STANDARD, delim="/"):
         """Returns Odds instance as a fractional string with the given delimiter (default '/').
         The return value will be the closest equivalent value found in the given fractional_set.
 
