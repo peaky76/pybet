@@ -242,7 +242,6 @@ class Odds(Decimal):
     def to_fractional(
         self, fractional_set: List[str] = FractionalOddsSets.STANDARD, delim="/"
     ) -> str:
-
         """Returns an Odds instance as a fractional string with the given delimiter (default '/').
         The return value will be the closest equivalent value found in the given fractional_set.
 
