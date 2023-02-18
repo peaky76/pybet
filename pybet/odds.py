@@ -55,7 +55,7 @@ class Odds(Decimal):
     def fractional(cls, arg1: int, arg2: int) -> Odds:
         ...
 
-    @classmethod
+    @classmethod  # type: ignore
     def fractional(cls, *args) -> Odds:
         """Creates an Odds instance from fraction-like input, including typical odds strings like '9/4', '9-4', '9:4'
 
@@ -71,7 +71,7 @@ class Odds(Decimal):
             Decimal('3.25')
         """
 
-        args = [
+        args = [  # type: ignore
             arg if not isinstance(arg, str) else arg.replace("-", "/").replace(":", "/")
             for arg in args
         ]
@@ -239,8 +239,10 @@ class Odds(Decimal):
     def to_fractional(self, fractional_set: List[Tuple[int, int]], delim: str) -> str:
         ...
 
-    def to_fractional(
-        self, fractional_set: List[str] = FractionalOddsSets.STANDARD, delim="/"
+    def to_fractional(  # type: ignore
+        self,
+        fractional_set=FractionalOddsSets.STANDARD,
+        delim="/",
     ) -> str:
         """Returns an Odds instance as a fractional string with the given delimiter (default '/').
         The return value will be the closest equivalent value found in the given fractional_set.
