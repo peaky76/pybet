@@ -90,9 +90,9 @@ class MarketTestCase(TestCase):
         self.assertAlmostEqual(market.get("gamma"), Decimal(2.308), places=3)
 
     def test_market_fill_raises_error_when_specified_margin_already_exceeded(self):
-        market = Market({"alpha": Odds(3), "beta": Odds(3), "gamma": None})
-        market.fill(-10)
-        self.assertRaises(ValueError)
+        market = Market({"alpha": Odds(2), "beta": Odds(2), "gamma": None})
+        with self.assertRaises(ValueError):
+            market.fill(-1)
 
     def test_market_wipe(self):
         self.market.wipe()
