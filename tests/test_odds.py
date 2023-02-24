@@ -117,6 +117,9 @@ class TestOdds(TestCase):
     def test_odds_cannot_init_with_probability_0(self):
         self.assertRaises(ValueError, lambda: Odds.probability(0))
 
+    def test_odds_str_rounds_to_two_decimal_places(self):
+        self.assertEqual("4.33", str(Odds.fractional(10, 3)))
+
     def test_odds_less_than_is_true(self):
         self.assertTrue(Odds.percentage(40) < Odds("3.25"))
 
