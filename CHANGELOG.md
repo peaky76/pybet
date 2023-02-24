@@ -9,11 +9,25 @@ The versioning refers to the versions on pypi
 
 ## [Unreleased]
 
+## [0.4.2] (2023-02-24)
+
+#### Refactorings
+
+- Improve type hinting in kelly
+- Improve var names in kelly
+- Replace check for negative kelly with use of max
+
+#### Others
+
+- Configure ignores for coverage
+- Complete coverage in `Odds` and `Market`
+- Suspend type checking on complex constructors
+
 ## [0.4.1] - 2023-02-18
 
 ### Added
 
-- [documentation pages at readthedocs.io](https://pybet.readthedocs.io)
+- [Documentation pages at readthedocs.io](https://pybet.readthedocs.io)
 
 ### Other
 
