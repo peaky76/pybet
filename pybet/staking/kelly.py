@@ -24,13 +24,13 @@ def kelly(true_odds: Odds, market_odds: Odds, bank: Decimal) -> Decimal:
         Decimal('0.00')
     """
 
-    p = true_odds.to_probability()
-    q = 1 - p
-    odds = market_odds.to_one()
+    p: Decimal = true_odds.to_probability()
+    q: Decimal = 1 - p
+    odds: Decimal = market_odds.to_one()
 
-    edge = (odds * p) - q
-    kelly = edge / odds
+    edge: Decimal = (odds * p) - q
+    kelly: Decimal = edge / odds
 
-    stake = round((Decimal(bank * max(kelly, 0))), 2)
+    stake: Decimal = round(bank * max(kelly, Decimal("0")), 2)
 
     return stake
