@@ -13,9 +13,9 @@ The versioning refers to the versions on pypi
 
 #### Refactorings
 
-- Improve type hinting in kelly
-- Improve var names in kelly
-- Replace check for negative kelly with use of max
+- Improve type hinting in `kelly`
+- Improve var names in `kelly`
+- Replace check for negative `kelly` with use of max
 
 #### Others
 
