@@ -16,6 +16,10 @@ class MarketTestCase(TestCase):
     def test_initialise_market_without_odds(self):
         self.assertEqual(self.empty_market.get("alpha"), None)
 
+    def test_market_setattr_with_non_odds_instance(self):
+        self.empty_market["alpha"] = 2
+        self.assertEqual(self.empty_market.get("alpha"), Odds(2))
+
     def test_set_market_places(self):
         self.assertEqual(self.place_market.places, 2)
 
