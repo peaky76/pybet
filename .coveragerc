@@ -2,6 +2,5 @@
 omit = tests/*
 
 [report]
-exclude_lines = 
-    pragma: not covered
+exclude_also = 
     @overload
