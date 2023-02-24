@@ -27,12 +27,11 @@ def kelly(true_odds: Odds, market_odds: Odds, bank: Decimal) -> Decimal:
 
     p = true_odds.to_probability()
     q = 1 - p
-    b = market_odds.to_one()
+    odds = market_odds.to_one()
 
-    kelly_percentage = (b * p - q) / b
-    stake = round(
-        (Decimal(bank * kelly_percentage) if kelly_percentage > 0.0 else Decimal(0.00)),
-        2,
-    )
+    edge = (odds * p) - q
+    kelly = edge / odds
+
+    stake = round((Decimal(bank * max(kelly, 0))), 2)
 
     return stake
