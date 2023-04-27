@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
-## [Unreleased]
+## 0.5.0 (2023-04-27)
+
+#### New Features
+
+- optional commission arg in `kelly`
+
+#### Docs
+
+- minor style fix on CHANGELOG
+
+#### Others
+
+- reorder dependencies in `pyproject.toml`
+- add `prep.sh` script
 
 ## [0.4.2] (2023-02-24)
 
