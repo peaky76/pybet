@@ -98,6 +98,55 @@ class MarketTestCase(TestCase):
         with self.assertRaises(ValueError):
             market.fill(-1)
 
+    def test_market_meld_combines_markets_in_equal_proportion_by_default(self):
+        runners = ["alpha", "beta", "gamma"]
+        market_1 = Market(zip(runners, [Odds.percentage(x) for x in (40, 30, 30)]))
+        market_2 = Market(zip(runners, [Odds.percentage(x) for x in (30, 30, 40)]))
+        new_market = market_1.meld(market_2)
+        self.assertAlmostEqual(new_market.get("alpha").to_percentage(), 35, places=3)
+        self.assertAlmostEqual(new_market.get("beta").to_percentage(), 30, places=3)
+        self.assertAlmostEqual(new_market.get("gamma").to_percentage(), 35, places=3)
+
+    def test_market_meld_combines_markets_in_unequal_proportion_when_specified(self):
+        runners = ["alpha", "beta", "gamma"]
+        market_1 = Market(zip(runners, [Odds.percentage(x) for x in (40, 30, 30)]))
+        market_2 = Market(zip(runners, [Odds.percentage(x) for x in (30, 30, 40)]))
+        new_market = market_1.meld(market_2, 75)
+        self.assertAlmostEqual(
+            new_market.get("alpha").to_percentage(), Decimal(32.5), places=3
+        )
+        self.assertAlmostEqual(new_market.get("beta").to_percentage(), 30, places=3)
+        self.assertAlmostEqual(
+            new_market.get("gamma").to_percentage(), Decimal(37.5), places=3
+        )
+
+    def test_market_meld_combines_markets_at_100_percent_values(self):
+        runners = ["alpha", "beta", "gamma"]
+        market_1 = Market(zip(runners, [Odds.percentage(x) for x in (40, 30, 30)]))
+        market_2 = Market(zip(runners, [Odds.percentage(x) for x in (45, 45, 60)]))
+        new_market = market_1.meld(market_2)
+        self.assertAlmostEqual(new_market.get("alpha").to_percentage(), 35, places=3)
+        self.assertAlmostEqual(new_market.get("beta").to_percentage(), 30, places=3)
+        self.assertAlmostEqual(new_market.get("gamma").to_percentage(), 35, places=3)
+
+    def test_market_meld_raises_error_when_runners_missing(self):
+        market_1 = Market({"alpha": Odds(3), "beta": Odds(3), "gamma": Odds(3)})
+        market_2 = Market({"alpha": Odds(3), "beta": Odds(3)})
+        with self.assertRaises(ValueError):
+            market_1.meld(market_2)
+
+    def test_market_meld_raises_error_when_runners_are_not_identical(self):
+        market_1 = Market({"alpha": Odds(3), "beta": Odds(3), "gamma": Odds(3)})
+        market_2 = Market({"alpha": Odds(3), "beta": Odds(3), "delta": Odds(3)})
+        with self.assertRaises(ValueError):
+            market_1.meld(market_2)
+
+    def test_market_meld_raises_error_when_weighting_is_out_of_range(self):
+        market_1 = Market({"alpha": Odds(3), "beta": Odds(3), "delta": Odds(3)})
+        market_2 = Market({"alpha": Odds(3), "beta": Odds(3), "delta": Odds(3)})
+        with self.assertRaises(ValueError):
+            market_1.meld(market_2, 120)
+
     def test_market_wipe(self):
         self.market.wipe()
         self.assertIsNone(self.market.get("alpha"))
