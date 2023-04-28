@@ -180,6 +180,24 @@ Where no margin is specified, a 100% market is assumed.
    market.fill()
    market.get('Frankel')           # 2
 
+`meld`
+""""""
+
+Melds the market with another market, with optional weighting. Each market is normalised to 100 percent before merging
+
+.. code-block:: python
+
+   other_market = Market({'Frankel': 3, 'Sea the Stars': 3, 'Brigadier Gerard': 3})
+ 
+   new_market = market.meld(other_market)
+   new_market.get('Sea the Stars')     # 3
+   new_market.get('Brigadier Gerard')  # 4
+
+   new_market = market.meld(other_market, 100)
+   new_market.get('Sea the Stars')     # 3
+   new_market.get('Brigadier Gerard')  # 3 (i.e. the weighting is 100 percent towards the other market)
+
+
 `wipe`
 """"""
 

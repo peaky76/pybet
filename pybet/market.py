@@ -161,6 +161,34 @@ class Market(dict):
 
         return self
 
+    def meld(self, other: Market, other_percentage: float = 50) -> Market:
+        """Melds two markets together so that the odds for each runner are a weighted average of the two markets
+
+        :param other: The market to meld with
+        :type other: Market
+        :param other_percentage: The percentage of the melded market that should be made up of the other market, defaults to 50
+        :type other_percentage: float, optional
+        :raises ValueError: if the two markets do not have the same runners
+        :return: A market with the weighted average odds of the two markets
+        """
+
+        if self.keys() != other.keys():
+            raise ValueError("Markets must have the same runners")
+
+        if 0 <= other_percentage <= 100:
+            raise ValueError("Percentage must be between 0 and 100")
+
+        new_market = Market(zip(self.keys(), [None] * len(self)))
+        market_1 = self.apply_margin(0)
+        market_2 = other.apply_margin(0)
+        for runner in self.keys():
+            new_market[runner] = Odds.percentage(
+                (market_1[runner].to_percentage() * (100 - other_percentage) / 100)
+                + (market_2[runner].to_percentage() * other_percentage / 100)
+            )
+
+        return new_market
+
     def wipe(self) -> Market:
         """Wipe market so that none of the runners have any odds
 
