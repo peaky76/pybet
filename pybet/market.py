@@ -179,8 +179,8 @@ class Market(dict):
             raise ValueError("Percentage must be between 0 and 100")
 
         new_market = Market(zip(self.keys(), [None] * len(self)))
-        market_1 = self.apply_margin(0)
-        market_2 = other.apply_margin(0)
+        market_1 = self.apply_margin(Decimal(0))
+        market_2 = other.apply_margin(Decimal(0))
         for runner in self.keys():
             new_market[runner] = Odds.percentage(
                 (market_1[runner].to_percentage() * (100 - other_percentage) / 100)
