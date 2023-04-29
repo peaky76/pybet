@@ -175,7 +175,7 @@ class Market(dict):
         if self.keys() != other.keys():
             raise ValueError("Markets must have the same runners")
 
-        if 0 <= other_percentage <= 100:
+        if not 0 <= other_percentage <= 100:
             raise ValueError("Percentage must be between 0 and 100")
 
         new_market = Market(zip(self.keys(), [None] * len(self)))
