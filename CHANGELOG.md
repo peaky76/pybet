@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
+## [0.6.1] (2023-05-05)
+
+#### Fixes
+
+- fix for `ValueError` check in `Market.meld` (was merged pre-0.6.0 but missing from release)
+
 ## [0.6.0] (2023-04-29)
 
 #### New Features
