@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pybet"
-version = "0.6.1"
+version = "0.6.2"
 description = "A library of betting utilities to assist with calculation of bets, stakes and markets"
 license = "GPL-3.0-only"
 authors = ["Robert Peacock <robertjamespeacock@gmail.com>"]
