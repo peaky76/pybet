@@ -1,6 +1,7 @@
 from __future__ import annotations
 from decimal import Decimal
 from fractions import Fraction
+from math import inf
 from typing import overload, List, Tuple, Union
 
 
@@ -138,10 +139,10 @@ class Odds(Decimal):
             Decimal('2.5')
         """
 
-        if not 0 < value < 100:
+        if not 0 <= value <= 100:
             raise ValueError("Percentage must be between 0 and 100")
 
-        return cls(100 / value)
+        return cls(100 / value) if value > 0 else cls(inf)
 
     @classmethod
     def probability(cls, value: Decimal) -> Odds:
@@ -158,10 +159,10 @@ class Odds(Decimal):
             Decimal('2.5')
         """
 
-        if not 0 < value < 1:
+        if not 0 <= value <= 1:
             raise ValueError("Probability must be between 0 and 1")
 
-        return cls(1 / value)
+        return cls(1 / value) if value > 0 else cls(inf)
 
     # Dunder methods
 

@@ -1,5 +1,6 @@
 from decimal import Decimal
 from fractions import Fraction
+from math import inf
 from pybet import Odds
 from pybet.odds import FractionalOddsSets
 from unittest import TestCase
@@ -93,11 +94,11 @@ class TestOdds(TestCase):
     def test_odds_cannot_init_with_percentage_too_low(self):
         self.assertRaises(ValueError, lambda: Odds.percentage(-10))
 
-    def test_odds_cannot_init_with_percentage_100(self):
-        self.assertRaises(ValueError, lambda: Odds.percentage(100))
+    def test_odds_can_init_with_percentage_100(self):
+        self.assertEqual(1.0, Odds.percentage(100))
 
-    def test_odds_cannot_init_with_percentage_0(self):
-        self.assertRaises(ValueError, lambda: Odds.percentage(0))
+    def test_odds_can_init_with_percentage_0(self):
+        self.assertEqual(inf, Odds.percentage(0))
 
     def test_odds_can_init_with_probability_decimal(self):
         self.assertEqual(2.5, Odds.probability(Decimal("0.4")))
@@ -111,11 +112,11 @@ class TestOdds(TestCase):
     def test_odds_cannot_init_with_probability_too_low(self):
         self.assertRaises(ValueError, lambda: Odds.probability(-0.1))
 
-    def test_odds_cannot_init_with_probability_1(self):
-        self.assertRaises(ValueError, lambda: Odds.probability(1))
+    def test_odds_can_init_with_probability_1(self):
+        self.assertEqual(1.0, Odds.probability(1))
 
-    def test_odds_cannot_init_with_probability_0(self):
-        self.assertRaises(ValueError, lambda: Odds.probability(0))
+    def test_odds_can_init_with_probability_0(self):
+        self.assertEqual(inf, Odds.probability(0))
 
     def test_odds_repr_is_str_wrapped_in_class_name(self):
         self.assertEqual("Odds('3.25')", repr(Odds("3.25")))
