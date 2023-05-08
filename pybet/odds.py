@@ -165,6 +165,19 @@ class Odds(Decimal):
 
     # Dunder methods
 
+    def __repr__(self) -> str:
+        """A string representation of the odds as a decimal to two decimal places
+
+        :return: The odds to two decimal places
+        :rtype: str
+
+        :Example:
+            >>> repr(Odds(3.25))
+            Odds('3.25')
+        """
+
+        return f"{self.__class__.__name__}('{str(self)}')"
+
     def __str__(self) -> str:
         """A string representation of the odds as a decimal to two decimal places
 
