@@ -117,6 +117,9 @@ class TestOdds(TestCase):
     def test_odds_cannot_init_with_probability_0(self):
         self.assertRaises(ValueError, lambda: Odds.probability(0))
 
+    def test_odds_repr_is_str_wrapped_in_class_name(self):
+        self.assertEqual("Odds('3.25')", repr(Odds("3.25")))
+
     def test_odds_str_rounds_to_two_decimal_places(self):
         self.assertEqual("4.33", str(Odds.fractional(10, 3)))
 
