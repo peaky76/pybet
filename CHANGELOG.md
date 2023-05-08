@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
+## [0.6.2] (2023-05-08)
+
+#### Fixes
+
+- make `Odds.__repr__` class specific
+- allow `Odds.probability` and `Odds.percentage` class methods to operate at "never" and "always" extremes
+
+#### Others
+
+- add ruff
+
 ## [0.6.1] (2023-05-05)
 
 #### Fixes
