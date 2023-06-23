@@ -24,7 +24,7 @@ coverage = "^7.1.0"
 mypy = "^1.0.1"
 pytest = "^7.2.1"
 pytest-cov = "^4.0.0"
-ruff = ">=0.0.265,<0.0.273"
+ruff = ">=0.0.265,<0.0.276"
 sphinx = "^6.1.3"
 sphinx-rtd-theme = "^1.2.0"
 
