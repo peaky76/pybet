@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
+## [0.7.1] (2023-08-08)
+
+#### Docs
+
+- add `.readthedocs.yaml` v2 config
+
+#### Others
+
+- ruff ignore E731
+- refactor `Market` testing to harmonise approaches
+
 ## [0.7.0] (2023-08-08)
 
 #### New Features
