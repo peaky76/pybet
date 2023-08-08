@@ -1,6 +1,8 @@
 API
 ---
 
+Here is the API documentation for the pybet package.
+
 .. automodule:: pybet.market
    :members:
    :undoc-members:
