@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
+## [0.7.0] (2023-08-08)
+
+#### New Features
+
+- `Market.derive` method
+
+#### Others
+
+- ruff ignore F821
+
 ## [0.6.2] (2023-05-08)
 
 #### Fixes
