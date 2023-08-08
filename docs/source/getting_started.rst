@@ -1,7 +1,7 @@
 Getting started
 ---------------
 
-The key components are: 
+The key components of pybet are: 
 
 The Odds class which enables conversion from and to the following types of odds or odds-equivalent:
 
