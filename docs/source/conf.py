@@ -9,7 +9,7 @@
 project = "Pybet"
 copyright = "2023, Robert Peacock"
 author = "Robert Peacock"
-release = "0.4.2"
+release = "0.7.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

@@ -1,7 +1,7 @@
 Welcome to pybet's documentation
 ================================
 
-**pybet** is a python-based library of betting utilities. It exists to assist with calculation of bets, stakes and markets
+**pybet** is a python-based library of betting utilities. It exists to assist with calculation of bets, stakes and markets.
 
 Installation
 ------------
