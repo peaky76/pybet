@@ -147,7 +147,7 @@ class Market(dict):
             raise ValueError("Invalid number of places")
 
         fair_market = Market(self)
-        fair_market.apply_margin(0)
+        fair_market.apply_margin(Decimal("0"))
         derived_market = Market.fromkeys(self.keys())
         prob = lambda x: float(fair_market[x].to_probability())
         product = lambda x: reduce(mul, x, 1)
@@ -161,14 +161,14 @@ class Market(dict):
                     for i, _ in enumerate(perm)
                 ]
             )
-            perm_probability = denominator / numerator
+            perm_probability = Decimal(denominator / numerator)
 
             for horse in perm:
                 derived_market[horse] = (derived_market[horse] or 0) + Odds.probability(
                     perm_probability
                 )
 
-        return derived_market
+        return Market(derived_market)
 
     def equalise(self) -> Market:
         """Resets a market so that all runners have equal odds with no overround
