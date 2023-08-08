@@ -12,6 +12,17 @@ class MarketTestCase(TestCase):
         self.place_market = Market(zip(self.runners, self.place_odds))
         self.place_market.places = 2
         self.empty_market = Market.fromkeys(self.runners)
+        self.harville_market = Market(
+            {
+                "alpha_ace": Odds(2),
+                "beta_boy": Odds(3),
+                "gamma_gal": Odds(5),
+                "delta_dame": Odds(10),
+                "epsilon_elf": Odds(20),
+                "zeta_zombie": Odds(50),
+            }
+        )
+        self.discounts = [1, 0.76, 0.62, 0.5, 0.4]
 
     def test_initialise_market_without_odds(self):
         self.assertEqual(self.empty_market.get("alpha"), None)
@@ -74,6 +85,64 @@ class MarketTestCase(TestCase):
     def test_market_apply_margin_negative_correctly_updates_outsider(self):
         self.market.apply_margin(-10)
         self.assertAlmostEqual(self.market.get("delta"), Decimal(11.667), places=3)
+
+    def test_market_derive_returns_200_percent_market_for_two_places_standard(self):
+        self.assertAlmostEqual(
+            Decimal("200.000"), self.harville_market.derive(2).percentage, places=3
+        )
+
+    def test_market_derive_returns_300_percent_market_for_three_places_standard(self):
+        self.assertAlmostEqual(
+            Decimal("300.000"), self.harville_market.derive(3).percentage, places=3
+        )
+
+    def test_market_derive_returns_400_percent_market_for_four_places_standard(self):
+        self.assertAlmostEqual(
+            Decimal("400.000"), self.harville_market.derive(4).percentage, places=3
+        )
+
+    def test_market_derive_returns_500_percent_market_for_five_places_standard(self):
+        self.assertAlmostEqual(
+            Decimal("500.000"), self.harville_market.derive(5).percentage, places=3
+        )
+
+    def test_market_derive_returns_200_percent_market_for_two_places_discounted(self):
+        self.assertAlmostEqual(
+            Decimal("200.000"),
+            self.harville_market.derive(2, discounts=self.discounts).percentage,
+            places=3,
+        )
+
+    def test_market_derive_returns_300_percent_market_for_three_places_discounted(self):
+        self.assertAlmostEqual(
+            Decimal("300.000"),
+            self.harville_market.derive(3, discounts=self.discounts).percentage,
+            places=3,
+        )
+
+    def test_market_derive_returns_400_percent_market_for_four_places_discounted(self):
+        self.assertAlmostEqual(
+            Decimal("400.000"),
+            self.harville_market.derive(4, discounts=self.discounts).percentage,
+            places=3,
+        )
+
+    def test_market_derive_returns_500_percent_market_for_five_places_discounted(self):
+        self.assertAlmostEqual(
+            Decimal("500.000"),
+            self.harville_market.derive(5, discounts=self.discounts).percentage,
+            places=3,
+        )
+
+    def test_market_derive_default_same_as_harville_discount_of_one(self):
+        default = Market(self.harville_market).derive(3)
+        discounted = Market(self.harville_market).derive(3, discounts=[1, 1, 1])
+        for h in self.harville_market.keys():
+            self.assertAlmostEqual(default[h], discounted[h], places=2)
+
+    def test_market_derive_raises_index_error_when_discounts_are_too_short(self):
+        with self.assertRaises(IndexError):
+            self.harville_market.derive(3, discounts=[1, 1])
 
     def test_market_equalise(self):
         self.market.equalise()
