@@ -1,5 +1,8 @@
 from __future__ import annotations
 from decimal import Decimal
+from functools import reduce
+from itertools import permutations
+from operator import mul
 from typing import Any, List
 from .odds import Odds
 
@@ -117,6 +120,55 @@ class Market(dict):
         for runner, odds in self.items():
             self[runner] = Odds(Decimal(odds) / adjustment)
         return self
+
+    def derive(self, places: int, *, discounts: List[float] | None = None) -> Market:
+        """Derives a place market from a win market using the Harville formula (see https://en.wikipedia.org/wiki/Harville_formula)
+        applying a specified discounted version of that formula if required
+
+        :param places: The number of places to derive the market for
+        :type places: int
+        :param discounts: A list of discounts to apply to the probability of each horse in the market, defaults to None
+        :type discounts: List[float], optional
+        :raises ValueError: If the number of places is invalid
+        :raises ValueError: If the market is not a win market
+        :return: A revised market with the specified number of places
+        :rtype: Market
+
+        :Example:
+            >>> market = Market({'Frankel': Odds(3), 'Sea The Stars': Odds(3), 'Nijinsky': Odds(3)})
+            >>> market.derive(2).get('Frankel')
+            Decimal('1.5')
+        """
+
+        if self.places != 1:
+            raise ValueError("Derivation only possible from win market")
+
+        if places >= len(self) or places <= 1:
+            raise ValueError("Invalid number of places")
+
+        fair_market = Market(self)
+        fair_market.apply_margin(0)
+        derived_market = Market.fromkeys(self.keys())
+        prob = lambda x: float(fair_market[x].to_probability())
+        product = lambda x: reduce(mul, x, 1)
+        prob_exponent = lambda x, y: prob(x) ** discounts[y] if discounts else prob(x)
+
+        for perm in list(permutations(self.keys(), places)):
+            denominator = product([prob_exponent(h, i) for i, h in enumerate(perm)])
+            numerator = product(
+                [
+                    sum(prob_exponent(h, i) for h in self.keys() if h not in perm[:i])
+                    for i, _ in enumerate(perm)
+                ]
+            )
+            perm_probability = denominator / numerator
+
+            for horse in perm:
+                derived_market[horse] = (derived_market[horse] or 0) + Odds.probability(
+                    perm_probability
+                )
+
+        return derived_market
 
     def equalise(self) -> Market:
         """Resets a market so that all runners have equal odds with no overround
