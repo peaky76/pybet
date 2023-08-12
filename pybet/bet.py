@@ -32,3 +32,21 @@ class Bet:
         """
         self.win_condition = win_condition
         self.end_condition = end_condition
+
+    @property
+    def is_settled(self):
+        """Returns whether the bet is settled.
+
+        :return: Whether the bet is settled
+        :rtype: bool
+
+        :Example:
+            >>> dice_rolled = False
+            >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
+            >>> bet.is_settled
+            False
+            >>> dice_rolled = True
+            >>> bet.is_settled
+            True
+        """
+        return self.end_condition()
