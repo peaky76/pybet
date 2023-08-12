@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
+## [0.8.0] (2023-08-12)
+
+### New Features
+
+- `Bet` class
+- `.settle` method
+- `.status` property
+
+### Fixes
+
+- `Market.derive` sets places on returned market
+
+### Docs
+
+- add `Bet` section for readthedocs
+
+### Others
+
+- test Market.derive ValueErrors
+
 ## [0.7.3] (2023-08-12)
 
 ### Docs
