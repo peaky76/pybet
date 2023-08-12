@@ -13,6 +13,8 @@ The Odds class which enables conversion from and to the following types of odds 
 
 A Market class which allows for the creation of markets based on those odds and some limited calculations on those markets
 
+A Bet class which allows for the creation of bets using callbacks to check if they are settleable or not.
+
 For a basic guide to odds, please see [https://www.investopedia.com/articles/investing/042115/betting-basics-fractional-decimal-american-moneyline-odds.asp]
 
 Odds
@@ -236,6 +238,42 @@ extracts the runners, normally leaving an overbroke market. In future releases, 
 
    market = market.without(['Frankel'])
    market.favourites == ['Sea The Stars']  # True
+
+Bet
+^^^^
+
+A bet is created using stake, odds and two callback functions - one to check if the bet is in a winning position or not, the other to
+check whether the market settlement date/time has passed (e.g. race finished, season over).
+
+.. code-block:: python
+
+   from pybet import Bet, Odds
+
+   bradford_city = {'position': 1}
+   games_played = 45
+   bradford_win_league = lambda: bradford_city['position'] == 1
+   season_over = lambda: games_played == 46
+   bet = Bet(2.00, Odds(21), bradford_win_league, season_over)
+
+`status`
+""""""""
+
+The bet can then be checked to see if it is open or not, using the status property:
+
+.. code-block:: python
+
+   bet.status  # <Status.OPEN: 0>
+   games_played += 1
+   bet.status  # <Status.WON: 1>
+
+`settle`
+""""""""
+
+The bet can then be settled, returning the winnings on a winning bet or zero if the bet is a loser:
+
+.. code-block:: python
+
+   bet.settle() # 42.0
 
 Staking
 ^^^^^^^
