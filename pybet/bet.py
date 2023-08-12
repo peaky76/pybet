@@ -28,6 +28,7 @@ class Bet:
         OPEN = 0
         WON = 1
         LOST = 2
+        VOID = 3
 
         def __str__(self):
             return self.name
@@ -59,6 +60,7 @@ class Bet:
         self.odds = odds
         self.win_condition = win_condition
         self.end_condition = end_condition
+        self._voided = False
 
     def settle(self) -> Decimal:
         """Returns the returns of the bet.
@@ -78,6 +80,9 @@ class Bet:
             >>> bet.settle()
             0
         """
+        if self._voided:
+            return self.stake
+
         if not self.end_condition():
             raise ValueError("Bet is still open")
 
@@ -99,7 +104,17 @@ class Bet:
             >>> bradford_city['position'] = 2
             <Status.LOST: 2>
         """
+        if self._voided:
+            return Bet.Status.VOID
+
         if self.end_condition():
             return Bet.Status.WON if self.win_condition() else Bet.Status.LOST
 
         return Bet.Status.OPEN
+
+    def void(self) -> None:
+        """Voids the bet.
+
+        :return: None
+        """
+        self._voided = True
