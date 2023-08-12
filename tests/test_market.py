@@ -158,6 +158,19 @@ class MarketTestCase(TestCase):
     def test_market_derive_sets_places_on_returned_market(self):
         self.assertEqual(self.market.derive(2).places, 2)
 
+    def test_market_derive_raises_value_error_when_invalid_number_of_places_given(self):
+        with self.assertRaises(ValueError):
+            self.market.derive(0)
+
+    def test_market_derive_raises_value_error_when_number_of_places_gt_runners(self):
+        with self.assertRaises(ValueError):
+            self.market.derive(100)
+
+    def test_market_derive_raises_value_error_when_used_on_place_market(self):
+        place_market = self.market.derive(2)
+        with self.assertRaises(ValueError):
+            place_market.derive(3)
+
     def test_market_derive_raises_index_error_when_discounts_are_too_short(self):
         with self.assertRaises(IndexError):
             self.market.derive(3, discounts=[1, 1])
