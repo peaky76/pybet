@@ -37,3 +37,15 @@ class TestBet(TestCase):
     ):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: None)
         self.assertFalse(bet.is_settled)
+
+    def test_bet_status_returns_open_if_bet_is_not_settled(self):
+        bet = Bet(2.50, Odds(2), lambda: True, lambda: False)
+        self.assertEqual(str(bet.status), "OPEN")
+
+    def test_bet_status_returns_win_if_bet_settled_and_win_condition_is_true(self):
+        bet = Bet(2.50, Odds(2), lambda: True, lambda: True)
+        self.assertEqual(str(bet.status), "WON")
+
+    def test_bet_status_returns_lost_if_bet_settled_and_win_condition_is_false(self):
+        bet = Bet(2.50, Odds(2), lambda: False, lambda: True)
+        self.assertEqual(str(bet.status), "LOST")

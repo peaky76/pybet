@@ -1,4 +1,5 @@
 from decimal import Decimal
+from enum import Enum
 from typing import Callable
 
 from .odds import Odds
@@ -19,6 +20,16 @@ class Bet:
         >>>     return rand.randint(1, 6)
         >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
     """
+
+    class Status(Enum):
+        """An enum to represent the status of a bet."""
+
+        OPEN = 0
+        WON = 1
+        LOST = 2
+
+        def __str__(self):
+            return self.name
 
     def __init__(
         self,
@@ -65,3 +76,24 @@ class Bet:
             True
         """
         return self.end_condition()
+
+    @property
+    def status(self):
+        """Returns the status of the bet.
+
+        :return: The status of the bet
+        :rtype: Status
+
+        :Example:
+            >>> dice_rolled = False
+            >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
+            >>> bet.status
+            Status.OPEN
+            >>> dice_rolled = True
+            >>> bet.status
+            Status.WON
+        """
+        if self.is_settled:
+            return Bet.Status.WON if self.win_condition() else Bet.Status.LOST
+
+        return Bet.Status.OPEN
