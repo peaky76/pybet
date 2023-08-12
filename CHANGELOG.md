@@ -7,84 +7,91 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
+## [0.7.3] (2023-08-12)
+
+### Docs
+
+- add `Market.derive` details
+- amend api and getting started documentation
+
 ## [0.7.2] (2023-08-08)
 
-#### Fixes
+### Fixes
 
 - typing in `Market.derive`
 
-#### Docs
+### Docs
 
 - fix config ref in `.readthedocs.yaml`
 
 ## [0.7.1] (2023-08-08)
 
-#### Docs
+### Docs
 
 - add `.readthedocs.yaml` v2 config
 
-#### Others
+### Others
 
 - ruff ignore E731
 - refactor `Market` testing to harmonise approaches
 
 ## [0.7.0] (2023-08-08)
 
-#### New Features
+### New Features
 
 - `Market.derive` method
 
-#### Others
+### Others
 
 - ruff ignore F821
 
 ## [0.6.2] (2023-05-08)
 
-#### Fixes
+### Fixes
 
 - make `Odds.__repr__` class specific
 - allow `Odds.probability` and `Odds.percentage` class methods to operate at "never" and "always" extremes
 
-#### Others
+### Others
 
 - add ruff
 
 ## [0.6.1] (2023-05-05)
 
-#### Fixes
+### Fixes
 
 - fix for `ValueError` check in `Market.meld` (was merged pre-0.6.0 but missing from release)
 
 ## [0.6.0] (2023-04-29)
 
-#### New Features
+### New Features
 
 - `Market.meld` method
 
 ## [0.5.0] (2023-04-27)
 
-#### New Features
+### New Features
 
 - optional commission arg in `kelly`
 
-#### Docs
+### Docs
 
 - minor style fix on CHANGELOG
 
-#### Others
+### Others
 
 - reorder dependencies in `pyproject.toml`
 - add `prep.sh` script
 
 ## [0.4.2] (2023-02-24)
 
-#### Refactorings
+### Refactorings
 
 - Improve type hinting in `kelly`
 - Improve var names in `kelly`
 - Replace check for negative `kelly` with use of max
 
-#### Others
+### Others
 
 - Configure ignores for coverage
 - Complete coverage in `Odds` and `Market`
