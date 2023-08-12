@@ -17,7 +17,7 @@ class Bet:
     Example:
         >>> dice_rolled = False
         >>> def dice_roll():
-        >>>     return rand.randint(1, 6)
+        >>>     return random.randint(1, 6)
         >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
     """
 
@@ -74,7 +74,7 @@ class Bet:
             5.00
         """
         if not self.end_condition():
-            raise ValueError("Bet is not settled")
+            raise ValueError("Bet is still open")
 
         return round(self.stake * self.odds, 2) if self.win_condition() else 0
 
