@@ -1,3 +1,7 @@
+import sys, os
+
+sys.path.insert(0, os.path.abspath("../.."))
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -9,7 +13,7 @@
 project = "Pybet"
 copyright = "2023, Robert Peacock"
 author = "Robert Peacock"
-release = "0.7.2"
+release = "0.7.3"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
