@@ -146,6 +146,24 @@ will change the odds in the following way:
 
 Note that the method applies the margin in proportion to each runner's current odds.
 
+`derive`
+""""""""
+
+Derives a place market from a win market, using the standard Harville formula (see [https://en.wikipedia.org/wiki/Harville_formula]) as default, or any supplied discount factors
+(such as those suggested by Lo and Bacon-Shone, see [https://www.researchgate.net/publication/4748916_Probability_and_Statistical_Models_for_Racing]), to enable
+more realistic place odds to be calculated.
+
+.. code-block:: python
+
+   place_market = market.derive(3)
+   place_market.get('Frankel')            # Odds("1.05")
+   place_market.get('Quixall Crossett')   # Odds("196.65")
+
+   place_market = market.derive(3, discounts=[1, 0.76, 0.62])
+   place_market.get('Frankel')            # Odds("1.09")
+   place_market.get('Quixall Crossett')   # Odds("39.47")
+
+
 `equalise`
 """"""""""
 
