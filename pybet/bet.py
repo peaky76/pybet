@@ -60,7 +60,7 @@ class Bet:
         self.end_condition = end_condition
 
     @property
-    def is_settled(self):
+    def is_settled(self) -> bool:
         """Returns whether the bet is settled.
 
         :return: Whether the bet is settled
@@ -78,7 +78,7 @@ class Bet:
         return self.end_condition()
 
     @property
-    def returns(self):
+    def returns(self) -> Decimal:
         """Returns the returns of the bet.
 
         :return: The returns of the bet to 2 decimal places
@@ -98,7 +98,7 @@ class Bet:
         return round(self.stake * self.odds, 2) if self.win_condition() else 0
 
     @property
-    def status(self):
+    def status(self) -> Status:
         """Returns the status of the bet.
 
         :return: The status of the bet
