@@ -168,7 +168,10 @@ class Market(dict):
                     perm_probability
                 )
 
-        return Market(derived_market)
+        place_market = Market(derived_market)
+        place_market.places = places
+
+        return place_market
 
     def equalise(self) -> Market:
         """Resets a market so that all runners have equal odds with no overround
