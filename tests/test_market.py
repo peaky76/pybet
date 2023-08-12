@@ -155,6 +155,9 @@ class MarketTestCase(TestCase):
         for h in self.market.keys():
             self.assertAlmostEqual(default[h], discounted[h], places=2)
 
+    def test_market_derive_sets_places_on_returned_market(self):
+        self.assertEqual(self.market.derive(2).places, 2)
+
     def test_market_derive_raises_index_error_when_discounts_are_too_short(self):
         with self.assertRaises(IndexError):
             self.market.derive(3, discounts=[1, 1])
