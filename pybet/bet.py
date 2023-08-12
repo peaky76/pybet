@@ -15,10 +15,11 @@ class Bet:
         end_condition: The callback that will determine whether the bet can be settled.
 
     Example:
-        >>> dice_rolled = False
-        >>> def dice_roll():
-        >>>     return random.randint(1, 6)
-        >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
+        >>> bradford_city = {'position': 1}
+        >>> games_played = 45
+        >>> bradford_win_league = lambda: bradford_city['position'] == 1
+        >>> season_over = lambda: games_played == 46
+        >>> bet = Bet(2.00, Odds(21), bradford_win_league, season_over)
     """
 
     class Status(Enum):
@@ -52,7 +53,7 @@ class Bet:
         :rtype: Bet
 
         :Example:
-            >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
+            >>> bet = Bet(2.00, Odds(21), bradford_win_league, season_over)
         """
         self.stake = stake
         self.odds = odds
@@ -67,11 +68,15 @@ class Bet:
         :raises ValueError: If the bet is still open
 
         :Example:
-            >>> dice_rolled = False
-            >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
-            >>> dice_rolled = True
+            >>> bet = Bet(2.00, Odds(21), bradford_win_league, season_over)
             >>> bet.settle()
-            5.00
+            ValueError: Bet is still open
+            >>> games_played = 46
+            >>> bet.settle()
+            42.00
+            >>> bradford_city['position'] = 2
+            >>> bet.settle()
+            0
         """
         if not self.end_condition():
             raise ValueError("Bet is still open")
@@ -86,13 +91,13 @@ class Bet:
         :rtype: Status
 
         :Example:
-            >>> dice_rolled = False
-            >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
+            >>> bet = Bet(2.00, Odds(21), bradford_win_league, season_over)
             >>> bet.status
-            Status.OPEN
-            >>> dice_rolled = True
-            >>> bet.status
-            Status.WON
+            <Status.OPEN: 0>
+            >>> games_played = 46
+            <Status.WON: 1>
+            >>> bradford_city['position'] = 2
+            <Status.LOST: 2>
         """
         if self.end_condition():
             return Bet.Status.WON if self.win_condition() else Bet.Status.LOST
