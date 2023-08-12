@@ -59,40 +59,21 @@ class Bet:
         self.win_condition = win_condition
         self.end_condition = end_condition
 
-    @property
-    def is_settled(self) -> bool:
-        """Returns whether the bet is settled.
-
-        :return: Whether the bet is settled
-        :rtype: bool
-
-        :Example:
-            >>> dice_rolled = False
-            >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
-            >>> bet.is_settled
-            False
-            >>> dice_rolled = True
-            >>> bet.is_settled
-            True
-        """
-        return self.end_condition()
-
-    @property
-    def returns(self) -> Decimal:
+    def settle(self) -> Decimal:
         """Returns the returns of the bet.
 
         :return: The returns of the bet to 2 decimal places
         :rtype: Decimal
-        :raises ValueError: If the bet is not settled
+        :raises ValueError: If the bet is still open
 
         :Example:
             >>> dice_rolled = False
             >>> bet = Bet(lambda: dice_roll() == 6, dice_rolled)
             >>> dice_rolled = True
-            >>> bet.returns
-            5
+            >>> bet.settle()
+            5.00
         """
-        if not self.is_settled:
+        if not self.end_condition():
             raise ValueError("Bet is not settled")
 
         return round(self.stake * self.odds, 2) if self.win_condition() else 0
@@ -113,7 +94,7 @@ class Bet:
             >>> bet.status
             Status.WON
         """
-        if self.is_settled:
+        if self.end_condition():
             return Bet.Status.WON if self.win_condition() else Bet.Status.LOST
 
         return Bet.Status.OPEN
