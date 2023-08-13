@@ -246,6 +246,8 @@ A bet is created using stake, odds and two callback functions - one to check if 
 check whether the market settlement date/time has passed (e.g. race finished, season over). The last of these is optional and if not
 given the bet will settle as win/loss as soon as the winning position is checked.
 
+A bet can also be created with best odds guaranteed (bog).
+
 .. code-block:: python
 
    from pybet import Bet, Odds
@@ -289,6 +291,13 @@ A reduction factor / rule 4 deduction can also be specified on settlement:
 .. code-block:: python
 
    bet.settle(rf=10) # 38.0
+
+When best odds guaranteed has been set, this comes into play on bet settlement:
+
+.. code-block:: python
+
+   bet = Bet(2.00, Odds(21), lambda: True, bog=True)
+   bet.settle(sp=(51)) # 102.0
 
 Staking
 ^^^^^^^
