@@ -1,5 +1,7 @@
 from decimal import Decimal
 from enum import Enum
+from functools import reduce
+from operator import mul
 from typing import Callable
 
 from .odds import Odds
@@ -144,3 +146,22 @@ class Bet:
         :return: None
         """
         self._voided = True
+
+
+class Accumulator(Bet):
+    def __init__(
+        self,
+        stake: int | float | Decimal | str,
+        bet_list: list[
+            list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
+        ],
+        *,
+        bog: bool = False,
+    ) -> None:
+        odds = reduce(mul, [bet[0] for bet in bet_list], 1)
+        win_condition = lambda: all([bet[1]() for bet in bet_list])
+        end_condition = lambda: all(
+            [(bet[2] if len(bet) == 3 else lambda: True)() for bet in bet_list]
+        )
+
+        return super().__init__(stake, odds, win_condition, end_condition, bog=bog)
