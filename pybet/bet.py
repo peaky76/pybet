@@ -36,7 +36,7 @@ class Bet:
     def __init__(
         self,
         stake: Decimal,
-        odds: Odds,
+        odds: Odds | str,
         win_condition: Callable[..., bool],
         end_condition: Callable[..., bool] = lambda: True,
     ) -> None:
@@ -56,13 +56,16 @@ class Bet:
         :Example:
             >>> bet = Bet(2.00, Odds(21), bradford_win_league, season_over)
         """
+        if not isinstance(odds, Odds) and odds != "SP":
+            raise ValueError("Odds must be an instance of Odds or 'SP'")
+
         self.stake = stake
         self.odds = odds
         self.win_condition = win_condition
         self.end_condition = end_condition
         self._voided = False
 
-    def settle(self) -> Decimal:
+    def settle(self, *, sp: Odds = None) -> Decimal:
         """Returns the returns of the bet.
 
         :return: The returns of the bet to 2 decimal places
@@ -86,7 +89,12 @@ class Bet:
         if not self.end_condition():
             raise ValueError("Bet is still open")
 
-        return Decimal(round(self.stake * self.odds, 2) if self.win_condition() else 0)
+        if self.odds == "SP" and not sp:
+            raise ValueError("Starting price not set")
+
+        return Decimal(
+            round(self.stake * (sp or self.odds), 2) if self.win_condition() else 0
+        )
 
     @property
     def status(self) -> Status:
