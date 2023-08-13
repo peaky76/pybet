@@ -100,15 +100,11 @@ class Bet:
         if self.odds == "SP" and not sp:
             raise ValueError("Starting price not set")
 
-        settlement_odds = Decimal(
-            (max([sp, self.odds]) if self.bog else sp or self.odds).to_one()
-            * Decimal(1 - rf / 100)
-            + 1
-        )
+        settlement_odds = max([sp, self.odds]) if self.bog else sp or self.odds
+        reducer = Decimal(1 - rf / 100)
+        returns = self.stake * Odds(settlement_odds.to_one() * reducer + 1)
 
-        return Decimal(
-            round(self.stake * settlement_odds, 2) if self.win_condition() else 0
-        )
+        return Decimal(round(returns, 2) if self.win_condition() else 0)
 
     @property
     def status(self) -> Status:
