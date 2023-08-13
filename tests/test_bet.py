@@ -69,10 +69,15 @@ class TestBet(TestCase):
         with self.assertRaises(ValueError):
             bet.settle()
 
-    def test_bet_settle_raises_error_if_reduction_factor_is_greater_than_max(self):
+    def test_bet_settle_raises_error_if_reduction_factor_is_gte_100(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: True)
         with self.assertRaises(ValueError):
             bet.settle(rf=110)
+
+    def test_bet_settle_raises_error_if_reduction_factor_is_lt_0(self):
+        bet = Bet(2.50, Odds(2), lambda: True, lambda: True)
+        with self.assertRaises(ValueError):
+            bet.settle(rf=-0.1)
 
     def test_bet_settle_raises_error_if_bet_market_is_not_ended(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: False)
