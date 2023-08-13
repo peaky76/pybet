@@ -100,6 +100,9 @@ class Bet:
         if self.odds == "SP" and not sp:
             raise ValueError("Starting price not set")
 
+        if self.bog and not sp:
+            raise ValueError("Cannot calculate best odds without starting price")
+
         settlement_odds = max([sp, self.odds]) if self.bog else sp or self.odds
         reducer = Decimal(1 - rf / 100)
         returns = self.stake * Odds(settlement_odds.to_one() * reducer + 1)

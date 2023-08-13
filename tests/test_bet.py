@@ -60,6 +60,11 @@ class TestBet(TestCase):
         bet = Bet(2.50, Odds(3), lambda: True, bog=True)
         self.assertEqual(bet.settle(sp=Odds(2)), 7.50)
 
+    def test_bet_settle_raises_error_if_bog_but_sp_not_given(self):
+        bet = Bet(2.50, Odds(2), lambda: True, bog=True)
+        with self.assertRaises(ValueError):
+            bet.settle()
+
     def test_bet_settle_raises_error_if_reduction_factor_is_greater_than_max(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: True)
         with self.assertRaises(ValueError):
