@@ -65,12 +65,12 @@ class TestBet(TestCase):
         with self.assertRaises(ValueError):
             bet.settle(rf=110)
 
-    def test_bet_settle_raises_error_if_bet_is_not_settled(self):
+    def test_bet_settle_raises_error_if_bet_market_is_not_ended(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: False)
         with self.assertRaises(ValueError):
             bet.settle()
 
-    def test_bet_status_returns_open_if_bet_is_not_settled(self):
+    def test_bet_status_returns_open_if_bet_market_is_not_ended(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: False)
         self.assertEqual(str(bet.status), "OPEN")
 
