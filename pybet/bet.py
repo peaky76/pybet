@@ -35,7 +35,7 @@ class Bet:
 
     def __init__(
         self,
-        stake: Decimal,
+        stake: int | float | Decimal | str,
         odds: Odds | str,
         win_condition: Callable[..., bool],
         end_condition: Callable[..., bool] = lambda: True,
@@ -59,13 +59,13 @@ class Bet:
         if not isinstance(odds, Odds) and odds != "SP":
             raise ValueError("Odds must be an instance of Odds or 'SP'")
 
-        self.stake = stake
+        self.stake = Decimal(stake)
         self.odds = odds
         self.win_condition = win_condition
         self.end_condition = end_condition
         self._voided = False
 
-    def settle(self, *, sp: Odds = None) -> Decimal:
+    def settle(self, *, sp: Odds = None, rf: int | Decimal = 0) -> Decimal:
         """Returns the returns of the bet.
 
         :return: The returns of the bet to 2 decimal places
@@ -83,6 +83,9 @@ class Bet:
             >>> bet.settle()
             0
         """
+        if rf > 100:
+            raise ValueError("Reduction factor cannot be greater than 100")
+
         if self._voided:
             return self.stake
 
@@ -92,8 +95,12 @@ class Bet:
         if self.odds == "SP" and not sp:
             raise ValueError("Starting price not set")
 
+        settlement_odds = Decimal(
+            (sp or self.odds).to_one() * Decimal(1 - rf / 100) + 1
+        )
+
         return Decimal(
-            round(self.stake * (sp or self.odds), 2) if self.win_condition() else 0
+            round(self.stake * settlement_odds, 2) if self.win_condition() else 0
         )
 
     @property
