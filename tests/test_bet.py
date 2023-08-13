@@ -15,6 +15,17 @@ class TestBet(TestCase):
         bet = Bet(2.50, Odds(2), lambda: None)
         self.assertTrue(bet.end_condition())
 
+    def test_bet_can_be_initialised_with_SP(
+        self,
+    ):
+        self.assertTrue(Bet(2.50, "SP", lambda: None, lambda: None))
+
+    def test_bet_raises_value_error_if_initialised_with_string_other_than_SP(
+        self,
+    ):
+        with self.assertRaises(ValueError):
+            Bet(2.50, "foobar", lambda: None, lambda: None)
+
     def test_bet_settle_returns_stake_times_odds_if_bet_is_won(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: True)
         self.assertEqual(bet.settle(), 5)
@@ -27,6 +38,15 @@ class TestBet(TestCase):
         bet = Bet(2.50, Odds(2), lambda: False, lambda: True)
         bet.void()
         self.assertEqual(bet.settle(), 2.50)
+
+    def test_bet_settle_raises_error_if_sp_not_set(self):
+        bet = Bet(2.50, "SP", lambda: True, lambda: True)
+        with self.assertRaises(ValueError):
+            bet.settle()
+
+    def test_bet_settle_returns_stake_times_sp_if_sp_given_in_call(self):
+        bet = Bet(2.50, "SP", lambda: True, lambda: True)
+        self.assertEqual(bet.settle(sp=Odds(2)), 5)
 
     def test_bet_settle_raises_error_if_bet_is_not_settled(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: False)

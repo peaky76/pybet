@@ -243,7 +243,8 @@ Bet
 ^^^^
 
 A bet is created using stake, odds and two callback functions - one to check if the bet is in a winning position or not, the other to
-check whether the market settlement date/time has passed (e.g. race finished, season over).
+check whether the market settlement date/time has passed (e.g. race finished, season over). The last of these is optional and if not
+given the bet will settle as win/loss as soon as the winning position is checked.
 
 .. code-block:: python
 
@@ -254,6 +255,8 @@ check whether the market settlement date/time has passed (e.g. race finished, se
    bradford_win_league = lambda: bradford_city['position'] == 1
    season_over = lambda: games_played == 46
    bet = Bet(2.00, Odds(21), bradford_win_league, season_over)
+
+Odds can also be given as "SP" (starting price), in which case the starting price needs to be specified at settlement time.
 
 `status`
 """"""""
@@ -274,6 +277,13 @@ The bet can then be settled, returning the winnings on a winning bet or zero if 
 .. code-block:: python
 
    bet.settle() # 42.0
+
+If a bet was created at SP, then the SP needs to be specified at settlement time. NB: If odds were given at creation time, then specifying a starting price here will override them.
+
+.. code-block:: python
+
+   bet.settle(sp=Odds(16)) # 32.0
+
 
 Staking
 ^^^^^^^
