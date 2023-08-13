@@ -38,7 +38,7 @@ class Bet:
         stake: Decimal,
         odds: Odds,
         win_condition: Callable[..., bool],
-        end_condition: Callable[..., bool],
+        end_condition: Callable[..., bool] = lambda: True,
     ) -> None:
         """Initialises a bet with a win condition and an end condition.
 

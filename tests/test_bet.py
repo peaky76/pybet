@@ -4,10 +4,16 @@ from pybet import Bet, Odds
 
 
 class TestBet(TestCase):
-    def test_bet_can_be_initialised(
+    def test_bet_can_be_initialised_with_all_params(
         self,
     ):
         self.assertTrue(Bet(2.50, Odds(2), lambda: None, lambda: None))
+
+    def test_bet_can_be_initialised_with_default_end_condition_as_true(
+        self,
+    ):
+        bet = Bet(2.50, Odds(2), lambda: None)
+        self.assertTrue(bet.end_condition())
 
     def test_bet_settle_returns_stake_times_odds_if_bet_is_won(self):
         bet = Bet(2.50, Odds(2), lambda: True, lambda: True)
