@@ -284,6 +284,11 @@ If a bet was created at SP, then the SP needs to be specified at settlement time
 
    bet.settle(sp=Odds(16)) # 32.0
 
+A reduction factor / rule 4 deduction can also be specified on settlement:
+
+.. code-block:: python
+
+   bet.settle(rf=10) # 38.0
 
 Staking
 ^^^^^^^
