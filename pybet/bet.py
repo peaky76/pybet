@@ -88,22 +88,27 @@ class Bet:
             >>> bet.settle()
             0
         """
-        if rf > 100:
-            raise ValueError("Reduction factor cannot be greater than 100")
 
         if self._voided:
             return self.stake
 
+        if rf > 100:
+            raise ValueError("Reduction factor cannot be greater than 100")
+
         if not self.end_condition():
             raise ValueError("Bet is still open")
 
-        if self.odds == "SP" and not sp:
-            raise ValueError("Starting price not set")
+        if not sp:
+            if self.odds == "SP":
+                raise ValueError("Starting price not set")
+            if self.bog:
+                raise ValueError("Cannot calculate best odds without starting price")
 
-        if self.bog and not sp:
-            raise ValueError("Cannot calculate best odds without starting price")
-
-        settlement_odds = max([sp, self.odds]) if self.bog else sp or self.odds
+        settlement_odds = (
+            max([sp, self.odds])
+            if self.bog and isinstance(self.odds, Odds)
+            else sp or self.odds
+        )
         reducer = Decimal(1 - rf / 100)
         returns = self.stake * Odds(settlement_odds.to_one() * reducer + 1)
 

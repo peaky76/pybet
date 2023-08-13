@@ -60,6 +60,10 @@ class TestBet(TestCase):
         bet = Bet(2.50, Odds(3), lambda: True, bog=True)
         self.assertEqual(bet.settle(sp=Odds(2)), 7.50)
 
+    def test_bet_settle_returns_correct_value_if_sp_taken_but_bog_set(self):
+        bet = Bet(2.50, "SP", lambda: True, bog=True)
+        self.assertEqual(bet.settle(sp=Odds(2)), 5.00)
+
     def test_bet_settle_raises_error_if_bog_but_sp_not_given(self):
         bet = Bet(2.50, Odds(2), lambda: True, bog=True)
         with self.assertRaises(ValueError):
