@@ -92,8 +92,8 @@ class Bet:
         if self._voided:
             return self.stake
 
-        if rf > 100:
-            raise ValueError("Reduction factor cannot be greater than 100")
+        if not 0 <= rf < 100:
+            raise ValueError("Reduction factor must be >= 0 and < 100")
 
         if not self.end_condition():
             raise ValueError("Bet is still open")
