@@ -39,6 +39,8 @@ class Bet:
         odds: Odds | str,
         win_condition: Callable[..., bool],
         end_condition: Callable[..., bool] = lambda: True,
+        *,
+        bog: bool = False,
     ) -> None:
         """Initialises a bet with a win condition and an end condition.
 
@@ -50,6 +52,8 @@ class Bet:
         :type win_condition: Callable[..., bool]
         :param end_condition: A callback that will determine whether the bet can be settled
         :type end_condition: Callable[..., bool]
+        :param bog: Whether the bet is best odds guaranteed
+        :type bog: bool
         :return: A bet
         :rtype: Bet
 
@@ -63,6 +67,7 @@ class Bet:
         self.odds = odds
         self.win_condition = win_condition
         self.end_condition = end_condition
+        self.bog = bog
         self._voided = False
 
     def settle(self, *, sp: Odds = None, rf: int | Decimal = 0) -> Decimal:
@@ -96,7 +101,9 @@ class Bet:
             raise ValueError("Starting price not set")
 
         settlement_odds = Decimal(
-            (sp or self.odds).to_one() * Decimal(1 - rf / 100) + 1
+            (max([sp, self.odds]) if self.bog else sp or self.odds).to_one()
+            * Decimal(1 - rf / 100)
+            + 1
         )
 
         return Decimal(
