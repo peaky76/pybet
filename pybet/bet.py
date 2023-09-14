@@ -81,7 +81,9 @@ class Bet:
         if not self.end_condition():
             raise ValueError("Bet is still open")
 
-        return round(self.stake * self.odds, 2) if self.win_condition() else 0
+        return Decimal(
+            str(round(self.stake * self.odds, 2) if self.win_condition() else 0)
+        )
 
     @property
     def status(self) -> Status:
