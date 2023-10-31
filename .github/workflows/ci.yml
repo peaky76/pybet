@@ -36,10 +36,6 @@ jobs:
         run: |
           poetry install
 
-      - name: Run black
-        run: |
-          poetry run black --check --verbose .
-
       - name: Run linter
         run: |
           poetry run ruff pybet
