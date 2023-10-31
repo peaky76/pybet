@@ -1,4 +1,5 @@
 from decimal import Decimal
+
 from ..odds import Odds
 
 

@@ -1,9 +1,10 @@
 from decimal import Decimal
 from fractions import Fraction
 from math import inf
+from unittest import TestCase
+
 from pybet import Odds
 from pybet.odds import FractionalOddsSets
-from unittest import TestCase
 
 
 class TestOdds(TestCase):

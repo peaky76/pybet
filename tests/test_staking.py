@@ -1,6 +1,7 @@
+from unittest import TestCase
+
 from pybet import Odds
 from pybet.staking import kelly
-from unittest import TestCase
 
 
 class TestStaking(TestCase):
