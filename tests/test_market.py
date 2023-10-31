@@ -153,7 +153,7 @@ class MarketTestCase(TestCase):
     def test_market_derive_default_same_as_harville_discount_of_one(self):
         default = Market(self.market).derive(3)
         discounted = Market(self.market).derive(3, discounts=[1, 1, 1])
-        for h in self.market.keys():
+        for h in self.market:
             self.assertAlmostEqual(default[h], discounted[h], places=2)
 
     def test_market_derive_sets_places_on_returned_market(self):

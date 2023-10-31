@@ -42,7 +42,7 @@ select = [
     # "PT", # flake8-pytest-style
     "RSE", # flake8-raise
     "RET", # flake8-return
-    # "SIM", # flake8-simplify
+    "SIM", # flake8-simplify
     # "PTH", # flake8-use-pathlib
     "PERF", # perflint
     "FURB", # refurb
