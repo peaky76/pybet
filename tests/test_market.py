@@ -1,6 +1,7 @@
 from decimal import Decimal
-from pybet import Market, Odds
 from unittest import TestCase
+
+from pybet import Market, Odds
 
 
 class MarketTestCase(TestCase):

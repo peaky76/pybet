@@ -29,9 +29,28 @@ sphinx = ">=6.1.3,<8.0.0"
 sphinx-rtd-theme = "^1.2.0"
 
 [tool.ruff]
+select = [
+    "E", # pycodestyle Error
+    "F", # pyflakes
+    "C90", # mccabe
+    "I", # isort
+    "N", # pep8-naming
+    # "UP", # pyupgrade
+    "FBT", # flake8-boolean-trap
+    "C4", # flake8-comprehensions
+    "PYI", # flake8-pyi
+    # "PT", # flake8-pytest-style
+    "RSE", # flake8-raise
+    "RET", # flake8-return
+    # "SIM", # flake8-simplify
+    # "PTH", # flake8-use-pathlib
+    "PERF", # perflint
+    "FURB", # refurb
+    # "RUF", # ruff specific
+
+]
 ignore = ["E501", "E731", "F821"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-

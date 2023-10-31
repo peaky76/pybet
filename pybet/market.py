@@ -1,9 +1,11 @@
 from __future__ import annotations
+
 from decimal import Decimal
 from functools import reduce
 from itertools import permutations
 from operator import mul
 from typing import Any, List
+
 from .odds import Odds
 
 

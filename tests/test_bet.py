@@ -1,5 +1,6 @@
-from pybet import Bet, Odds
 from unittest import TestCase
+
+from pybet import Bet, Odds
 
 
 class TestBet(TestCase):
