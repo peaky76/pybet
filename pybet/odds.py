@@ -3,7 +3,7 @@ from __future__ import annotations
 from decimal import Decimal
 from fractions import Fraction
 from math import inf
-from typing import List, Tuple, Union, overload
+from typing import Union, overload
 
 
 class FractionalOddsSets:
@@ -98,7 +98,7 @@ class Odds(Decimal):
         return cls(1 / (value - 1) + 1)
 
     @classmethod
-    def moneyline(cls, value: Union[str, int]) -> Odds:
+    def moneyline(cls, value: str | int) -> Odds:
         """Creates an Odds instance from an American moneyline value
 
         :param value: A representation of the moneyline value, e.g. -90
@@ -243,15 +243,15 @@ class Odds(Decimal):
 
     # Instance methods
     @overload
-    def to_fractional(self, fractional_set: List[str], delim: str) -> str:
+    def to_fractional(self, fractional_set: list[str], delim: str) -> str:
         ...
 
     @overload
-    def to_fractional(self, fractional_set: List[Fraction], delim: str) -> str:
+    def to_fractional(self, fractional_set: list[Fraction], delim: str) -> str:
         ...
 
     @overload
-    def to_fractional(self, fractional_set: List[Tuple[int, int]], delim: str) -> str:
+    def to_fractional(self, fractional_set: list[tuple[int, int]], delim: str) -> str:
         ...
 
     def to_fractional(  # type: ignore

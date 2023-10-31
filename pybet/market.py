@@ -4,7 +4,7 @@ from decimal import Decimal
 from functools import reduce
 from itertools import permutations
 from operator import mul
-from typing import Any, List
+from typing import Any
 
 from .odds import Odds
 
@@ -51,7 +51,7 @@ class Market(dict):
         return (self.percentage - self._fair_percentage) / len(self)
 
     @property
-    def favourites(self) -> List[Any]:
+    def favourites(self) -> list[Any]:
         """Returns list of runners that are favourite for the event
         Note: Will be a list even if there is only one favourite
 
@@ -123,7 +123,7 @@ class Market(dict):
             self[runner] = Odds(Decimal(odds) / adjustment)
         return self
 
-    def derive(self, places: int, *, discounts: List[float] | None = None) -> Market:
+    def derive(self, places: int, *, discounts: list[float] | None = None) -> Market:
         """Derives a place market from a win market using the Harville formula (see https://en.wikipedia.org/wiki/Harville_formula)
         applying a specified discounted version of that formula if required
 
@@ -262,7 +262,7 @@ class Market(dict):
             self[runner] = None
         return self
 
-    def without(self, runners: List[Any]) -> Market:
+    def without(self, runners: list[Any]) -> Market:
         """Create a new market with the specified runners removed
 
         :param runners: Runners to remove from the market
