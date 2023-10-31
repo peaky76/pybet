@@ -39,14 +39,13 @@ select = [
     "FBT", # flake8-boolean-trap
     "C4", # flake8-comprehensions
     "PYI", # flake8-pyi
-    # "PT", # flake8-pytest-style
     "RSE", # flake8-raise
     "RET", # flake8-return
     "SIM", # flake8-simplify
     # "PTH", # flake8-use-pathlib
     "PERF", # perflint
     "FURB", # refurb
-    # "RUF", # ruff specific
+    "RUF", # ruff specific
 
 ]
 ignore = ["E501", "E731", "F821"]
