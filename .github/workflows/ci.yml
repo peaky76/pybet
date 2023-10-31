@@ -38,7 +38,7 @@ jobs:
 
       - name: Run linter
         run: |
-          poetry run ruff pybet
+          poetry run ruff check pybet --preview
 
       - name: Run static type checking
         run: |
