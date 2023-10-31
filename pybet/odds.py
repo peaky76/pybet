@@ -3,7 +3,7 @@ from __future__ import annotations
 from decimal import Decimal
 from fractions import Fraction
 from math import inf
-from typing import Union, overload
+from typing import overload
 
 
 class FractionalOddsSets:
@@ -178,7 +178,7 @@ class Odds(Decimal):
             Odds('3.25')
         """
 
-        return f"{self.__class__.__name__}('{str(self)}')"
+        return f"{self.__class__.__name__}('{self!s}')"
 
     def __str__(self) -> str:
         """A string representation of the odds as a decimal to two decimal places
