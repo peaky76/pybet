@@ -23,7 +23,8 @@ class FractionalOddsSets:
             *["10/3", "6/4", "11/10"],
         ]
     ) + [
-        "/".join(x.split("/")[::-1]) for x in odds_against[1:]  # type: ignore
+        "/".join(x.split("/")[::-1])
+        for x in odds_against[1:]  # type: ignore
     ]  # [1:] removes 1/1 so it doesn't duplicate
 
 
