@@ -164,4 +164,4 @@ class Accumulator(Bet):
             [(bet[2] if len(bet) == 3 else lambda: True)() for bet in bet_list]
         )
 
-        return super().__init__(stake, odds, win_condition, end_condition, bog=bog)
+        super().__init__(stake, odds, win_condition, end_condition, bog=bog)
