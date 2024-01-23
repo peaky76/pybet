@@ -149,14 +149,20 @@ class Bet:
 
 
 class Accumulator(Bet):
-    
     _selection_count_requirement = None
 
-    def __new__(cls,  stake: float | Decimal | str,
+    def __new__(
+        cls,
+        stake: float | Decimal | str,
         bet_list: list[
             list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
-        ], **kwargs):
-        if cls._selection_count_requirement and len(bet_list) != cls._selection_count_requirement:
+        ],
+        **kwargs,
+    ):
+        if (
+            cls._selection_count_requirement
+            and len(bet_list) != cls._selection_count_requirement
+        ):
             raise ValueError("Double must have 2 selections")
 
         return super().__new__(cls)
@@ -185,4 +191,3 @@ class Double(Accumulator):
 
 class Treble(Accumulator):
     _selection_count_requirement = 3
-
