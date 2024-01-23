@@ -15,12 +15,12 @@ class TestBet(TestCase):
         bet = Bet(2.50, Odds(2), lambda: None)
         self.assertTrue(bet.end_condition())
 
-    def test_bet_can_be_initialised_with_SP(
+    def test_bet_can_be_initialised_with_sp(
         self,
     ):
         self.assertTrue(Bet(2.50, "SP", lambda: None, lambda: None))
 
-    def test_bet_raises_value_error_if_initialised_with_string_other_than_SP(
+    def test_bet_raises_value_error_if_initialised_with_string_other_than_sp(
         self,
     ):
         with self.assertRaises(ValueError):
