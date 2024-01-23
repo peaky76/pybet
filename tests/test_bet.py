@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from pybet import Accumulator, Bet, Double, Odds, Treble
+from pybet import Accumulator, Bet, Double, Odds, ThirteenFold, Treble
 
 
 class TestBet(TestCase):
@@ -141,6 +141,13 @@ class TestBet(TestCase):
     def test_treble_raises_error_if_not_correct_number_of_selections(self):
         with self.assertRaises(ValueError):
             Treble(
+                2,
+                [[Odds(2), lambda: True], [Odds(3), lambda: True]],
+            )
+
+    def test_dynamic_accumulator_class_up_to_twenty(self):
+        with self.assertRaises(ValueError):
+            ThirteenFold(
                 2,
                 [[Odds(2), lambda: True], [Odds(3), lambda: True]],
             )
