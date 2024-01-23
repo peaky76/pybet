@@ -37,7 +37,7 @@ class Bet:
 
     def __init__(
         self,
-        stake: int | float | Decimal | str,
+        stake: float | Decimal | str,
         odds: Odds | str,
         win_condition: Callable[..., bool],
         end_condition: Callable[..., bool] = lambda: True,
@@ -151,7 +151,7 @@ class Bet:
 class Accumulator(Bet):
     def __init__(
         self,
-        stake: int | float | Decimal | str,
+        stake: float | Decimal | str,
         bet_list: list[
             list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
         ],
