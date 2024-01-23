@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from pybet import Accumulator, Bet, Odds
+from pybet import Accumulator, Bet, Double, Odds, Treble
 
 
 class TestBet(TestCase):
@@ -130,3 +130,17 @@ class TestBet(TestCase):
             ],
         )
         self.assertEqual(acc.settle(), 0)
+
+    def test_double_raises_error_if_not_correct_number_of_selections(self):
+        with self.assertRaises(ValueError):
+            Double(
+                2,
+                [[Odds(2), lambda: True], [Odds(3), lambda: True], [Odds(5), lambda: True]],
+            )
+
+    def test_treble_raises_error_if_not_correct_number_of_selections(self):
+        with self.assertRaises(ValueError):
+            Treble(
+                2,
+                [[Odds(2), lambda: True], [Odds(3), lambda: True]],
+            )

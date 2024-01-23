@@ -165,3 +165,35 @@ class Accumulator(Bet):
         )
 
         super().__init__(stake, odds, win_condition, end_condition, bog=bog)
+
+
+class Double(Accumulator):
+    def __init__(
+        self,
+        stake: float | Decimal | str,
+        bet_list: list[
+            list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
+        ],
+        *,
+        bog: bool = False,
+    ) -> None:
+        if len(bet_list) != 2:
+            raise ValueError("Double must have 2 selections")
+
+        super().__init__(stake, bet_list, bog=bog)
+
+
+class Treble(Accumulator):
+    def __init__(
+        self,
+        stake: float | Decimal | str,
+        bet_list: list[
+            list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
+        ],
+        *,
+        bog: bool = False,
+    ) -> None:
+        if len(bet_list) != 3:
+            raise ValueError("Treble must have 3 selections")
+
+        super().__init__(stake, bet_list, bog=bog)
