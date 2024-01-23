@@ -159,9 +159,9 @@ class Accumulator(Bet):
         bog: bool = False,
     ) -> None:
         odds = reduce(mul, [bet[0] for bet in bet_list], 1)
-        win_condition = lambda: all([bet[1]() for bet in bet_list])
+        win_condition = lambda: all(bet[1]() for bet in bet_list)
         end_condition = lambda: all(
-            [(bet[2] if len(bet) == 3 else lambda: True)() for bet in bet_list]
+            (bet[2] if len(bet) == 3 else lambda: True)() for bet in bet_list
         )
 
         super().__init__(stake, odds, win_condition, end_condition, bog=bog)
