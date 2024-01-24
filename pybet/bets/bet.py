@@ -4,7 +4,7 @@ from functools import reduce
 from operator import mul
 from typing import Callable
 
-from .odds import Odds
+from pybet import Odds
 
 
 class Bet:

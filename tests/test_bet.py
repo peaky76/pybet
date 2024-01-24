@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from pybet import Accumulator, Bet, Double, Odds, ThirteenFold, Treble
+from pybet import Odds
+from pybet.bets import Accumulator, Bet, Double, ThirteenFold, Treble
 
 
 class TestBet(TestCase):
