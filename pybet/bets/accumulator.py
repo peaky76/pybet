@@ -17,7 +17,8 @@ class Accumulator(Bet):
         bet_list: list[
             list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
         ],
-        **kwargs,
+        *,
+        bog: bool = False,
     ):
         if (
             cls._selection_count_requirement
