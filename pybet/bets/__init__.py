@@ -1,6 +1,9 @@
 from peak_utility.number import Numbertext
 
-from .bet import Accumulator, Bet, Double, Treble
+from .accumulator import Accumulator
+from .bet import Bet
+from .double import Double
+from .treble import Treble
 
 __all__ = ["Accumulator", "Bet", "Double", "Treble"]
 
