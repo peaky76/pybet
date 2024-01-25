@@ -104,6 +104,9 @@ class Bet:
             if self.bog:
                 raise ValueError("Cannot calculate best odds without starting price")
 
+        if not self.win_condition():
+            return Decimal(0)
+
         settlement_odds = (
             max([sp, self.odds])
             if self.bog and isinstance(self.odds, Odds)
@@ -112,7 +115,7 @@ class Bet:
         reducer = Decimal(1 - rf / 100)
         returns = self.stake * Odds(settlement_odds.to_one() * reducer + 1)
 
-        return Decimal(round(returns, 2) if self.win_condition() else 0)
+        return Decimal(round(returns, 2))
 
     @property
     def status(self) -> Status:
