@@ -9,7 +9,7 @@ from .bet import Bet
 
 
 class Accumulator(Bet):
-    _selection_count_requirement = None
+    _selection_count_requirement: int | None = None
 
     def __new__(
         cls,
