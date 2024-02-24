@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from pybet import Odds
-from pybet.bets import ThirteenFold
+from pybet.bets import ThirteenFold # type: ignore
 
 
 class TestBet(TestCase):
@@ -10,4 +10,4 @@ class TestBet(TestCase):
             ThirteenFold(
                 2,
                 [[Odds(2), lambda: True], [Odds(3), lambda: True]],
-            )
+            ) 
