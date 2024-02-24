@@ -113,6 +113,7 @@ class Bet:
             else sp or self.odds
         )
         assert isinstance(settlement_odds, Odds)
+        
         reducer = Decimal(1 - rf / 100)
         returns = self.stake * Odds(settlement_odds.to_one() * reducer + 1)
 
