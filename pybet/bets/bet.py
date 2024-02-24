@@ -70,7 +70,7 @@ class Bet:
         self.bog = bog
         self._voided = False
 
-    def settle(self, *, sp: Odds = None, rf: int | Decimal = 0) -> Decimal:
+    def settle(self, *, sp: Odds | None = None, rf: int | Decimal = 0) -> Decimal:
         """Returns the returns of the bet.
 
         :return: The returns of the bet to 2 decimal places
