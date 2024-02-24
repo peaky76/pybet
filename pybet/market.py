@@ -157,12 +157,10 @@ class Market(dict):
 
         for perm in list(permutations(self.keys(), places)):
             denominator = product([prob_exponent(h, i) for i, h in enumerate(perm)])
-            numerator = product(
-                [
-                    sum(prob_exponent(h, i) for h in self.keys() if h not in perm[:i])
-                    for i, _ in enumerate(perm)
-                ]
-            )
+            numerator = product([
+                sum(prob_exponent(h, i) for h in self.keys() if h not in perm[:i])
+                for i, _ in enumerate(perm)
+            ])
             perm_probability = Decimal(denominator / numerator)
 
             for horse in perm:
