@@ -1,0 +1,14 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: ruff format
+        stages: [commit]
+        language: system
+        entry: bash -c 'poetry run ruff format pybet --preview && git add .'
+        pass_filenames: false
+      - id: sphinx-build
+        name: build sphinx docs
+        entry: bash -c 'poetry run sphinx-build -b html docs/source docs/build'
+        language: system
+        files: '\.py$|docs/source/.*\.rst$'
