@@ -1,6 +1,6 @@
 from decimal import Decimal
 from enum import Enum
-from typing import Callable
+from typing import Callable, Literal
 
 from pybet import Odds
 
@@ -36,7 +36,7 @@ class Bet:
     def __init__(
         self,
         stake: float | Decimal | str,
-        odds: Odds | str,
+        odds: Odds | Literal['SP'],
         win_condition: Callable[..., bool],
         end_condition: Callable[..., bool] = lambda: True,
         *,
@@ -109,9 +109,10 @@ class Bet:
 
         settlement_odds = (
             max([sp, self.odds])
-            if self.bog and isinstance(self.odds, Odds)
+            if self.bog and isinstance(self.odds, Odds) and sp
             else sp or self.odds
         )
+        assert isinstance(settlement_odds, Odds)
         reducer = Decimal(1 - rf / 100)
         returns = self.stake * Odds(settlement_odds.to_one() * reducer + 1)
 
