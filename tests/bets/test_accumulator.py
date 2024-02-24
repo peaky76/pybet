@@ -10,9 +10,9 @@ class TestAccumulator(TestCase):
             Accumulator(
                 2,
                 [
-                    [Odds(2), lambda: True],
-                    [Odds(3), lambda: True],
-                    [Odds(5), lambda: True],
+                    (Odds(2), lambda: True),
+                    (Odds(3), lambda: True),
+                    (Odds(5), lambda: True),
                 ],
             )
         )
@@ -20,7 +20,7 @@ class TestAccumulator(TestCase):
     def test_accumulator_settles_as_win_if_all_bets_win(self):
         acc = Accumulator(
             2,
-            [[Odds(2), lambda: True], [Odds(3), lambda: True], [Odds(5), lambda: True]],
+            [(Odds(2), lambda: True), (Odds(3), lambda: True), (Odds(5), lambda: True)],
         )
         self.assertEqual(acc.settle(), 60)
 
@@ -28,9 +28,9 @@ class TestAccumulator(TestCase):
         acc = Accumulator(
             2,
             [
-                [Odds(2), lambda: True],
-                [Odds(3), lambda: False],
-                [Odds(5), lambda: True],
+                (Odds(2), lambda: True),
+                (Odds(3), lambda: False),
+                (Odds(5), lambda: True),
             ],
         )
         self.assertEqual(acc.settle(), 0)

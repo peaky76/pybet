@@ -15,7 +15,7 @@ class Accumulator(Bet):
         cls,
         stake: float | Decimal | str,
         bet_list: list[
-            list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
+            tuple[Odds | str, Callable[..., bool], Callable[..., bool] | None]
         ],
         *,
         bog: bool = False,
@@ -32,15 +32,15 @@ class Accumulator(Bet):
         self,
         stake: float | Decimal | str,
         bet_list: list[
-            list[Odds | str, Callable[..., bool], Callable[..., bool] | None]
+            tuple[Odds | str, Callable[..., bool], Callable[..., bool] | None]
         ],
         *,
         bog: bool = False,
     ) -> None:
-        odds = reduce(mul, [bet[0] for bet in bet_list], 1)
+        odds = reduce(mul, [Odds(bet[0]) for bet in bet_list], 1)
         win_condition = lambda: all(bet[1]() for bet in bet_list)
         end_condition = lambda: all(
-            (bet[2] if len(bet) == 3 else lambda: True)() for bet in bet_list
+            bet[2]() if len(bet) == 3 and bet[2] else True for bet in bet_list
         )
 
-        super().__init__(stake, odds, win_condition, end_condition, bog=bog)
+        super().__init__(stake, Odds(odds), win_condition, end_condition, bog=bog)
