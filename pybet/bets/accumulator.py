@@ -24,7 +24,7 @@ class Accumulator(Bet):
             cls._selection_count_requirement
             and len(bet_list) != cls._selection_count_requirement
         ):
-            raise ValueError("Double must have 2 selections")
+            raise ValueError(f"{cls.__name__} must have {cls._selection_count_requirement} selections")
 
         return super().__new__(cls)
 
