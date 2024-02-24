@@ -1,4 +1,4 @@
-from peak_utility.number import Numbertext
+from peak_utility.number import Numbertext # type: ignore
 
 from .accumulator import Accumulator
 from .bet import Bet
