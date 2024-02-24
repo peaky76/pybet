@@ -45,18 +45,15 @@ class Odds(Decimal):
 
     @overload
     @classmethod
-    def fractional(cls, arg: Fraction) -> Odds:
-        ...
+    def fractional(cls, arg: Fraction) -> Odds: ...
 
     @overload
     @classmethod
-    def fractional(cls, arg: str) -> Odds:
-        ...
+    def fractional(cls, arg: str) -> Odds: ...
 
     @overload
     @classmethod
-    def fractional(cls, arg1: int, arg2: int) -> Odds:
-        ...
+    def fractional(cls, arg1: int, arg2: int) -> Odds: ...
 
     @classmethod  # type: ignore
     def fractional(cls, *args) -> Odds:
@@ -244,16 +241,15 @@ class Odds(Decimal):
 
     # Instance methods
     @overload
-    def to_fractional(self, fractional_set: list[str], delim: str) -> str:
-        ...
+    def to_fractional(self, fractional_set: list[str], delim: str) -> str: ...
 
     @overload
-    def to_fractional(self, fractional_set: list[Fraction], delim: str) -> str:
-        ...
+    def to_fractional(self, fractional_set: list[Fraction], delim: str) -> str: ...
 
     @overload
-    def to_fractional(self, fractional_set: list[tuple[int, int]], delim: str) -> str:
-        ...
+    def to_fractional(
+        self, fractional_set: list[tuple[int, int]], delim: str
+    ) -> str: ...
 
     def to_fractional(  # type: ignore
         self,

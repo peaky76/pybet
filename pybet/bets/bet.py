@@ -36,7 +36,7 @@ class Bet:
     def __init__(
         self,
         stake: float | Decimal | str,
-        odds: Odds | Literal['SP'],
+        odds: Odds | Literal["SP"],
         win_condition: Callable[..., bool],
         end_condition: Callable[..., bool] = lambda: True,
         *,
@@ -113,7 +113,7 @@ class Bet:
             else sp or self.odds
         )
         assert isinstance(settlement_odds, Odds)
-        
+
         reducer = Decimal(1 - rf / 100)
         returns = self.stake * Odds(settlement_odds.to_one() * reducer + 1)
 
