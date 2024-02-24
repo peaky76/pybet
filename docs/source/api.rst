@@ -11,6 +11,10 @@ Here is the API documentation for the pybet package.
    :members:
    :undoc-members:
 
+.. automodule:: pybet.bets
+   :members:
+   :undoc-members:
+
 .. automodule:: pybet.staking
    :members:
    :undoc-members:
