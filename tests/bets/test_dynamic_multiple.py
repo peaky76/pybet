@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from pybet import Odds
-from pybet.bets import ThirteenFold # type: ignore
+from pybet.bets import ThirteenFold  # type: ignore
 
 
 class TestBet(TestCase):
