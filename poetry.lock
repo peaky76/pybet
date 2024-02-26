@@ -590,13 +590,13 @@ files = [
 
 [[package]]
 name = "peak-utility"
-version = "0.5.0"
+version = "0.6.0"
 description = "A library of utilities, created by peaky76"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "peak_utility-0.5.0-py3-none-any.whl", hash = "sha256:fe15d22326facbc150350670db6423cbc0351b4c2be597615d711a3577e5ea16"},
-    {file = "peak_utility-0.5.0.tar.gz", hash = "sha256:1243f99a485769ba35cc946cec9a6c8ba0dad54a80048300159af96106030e24"},
+    {file = "peak_utility-0.6.0-py3-none-any.whl", hash = "sha256:d72f5329ed16c0c313be46a4549e55d38c4d12f23cb8251ed71ba87090640f0b"},
+    {file = "peak_utility-0.6.0.tar.gz", hash = "sha256:dce4d018cb149aa9403d6b2511ff8c0fefb4bd99b4a287d21b85d9c1752c0406"},
 ]
 
 [package.dependencies]
@@ -1090,4 +1090,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "917d1cfe80a52b69aea907a66a3ab99ebb427a367fca4b69996758c0a25235ba"
+content-hash = "ac450d7eea2877bf6f0b1fb0580e7d5c39b246282a5e2a7bf6cee638e3fc3c1e"
