@@ -7,7 +7,7 @@ def kelly(
     true_odds: Odds,
     market_odds: Odds,
     bank: Decimal,
-    percentage_commission: Decimal = Decimal("0"),
+    percentage_commission: Decimal = Decimal(0),
 ) -> Decimal:
     """Calculates the stake that should be placed according to the Kelly Criterion
     [https://en.wikipedia.org/wiki/Kelly_criterion], i.e. edge over odds
@@ -41,6 +41,6 @@ def kelly(
     edge: Decimal = (odds * p) - q
     kelly: Decimal = edge / odds
 
-    stake: Decimal = round(bank * max(kelly, Decimal("0")), 2)
+    stake: Decimal = round(bank * max(kelly, Decimal(0)), 2)
 
     return stake
