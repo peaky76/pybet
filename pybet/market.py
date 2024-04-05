@@ -149,7 +149,7 @@ class Market(dict):
             raise ValueError("Invalid number of places")
 
         fair_market = Market(self)
-        fair_market.apply_margin(Decimal("0"))
+        fair_market.apply_margin(Decimal(0))
         derived_market = Market.fromkeys(self.keys())
         prob = lambda x: float(fair_market[x].to_probability())
         product = lambda x: reduce(mul, x, 1)
