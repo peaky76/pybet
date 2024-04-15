@@ -38,7 +38,7 @@ class Market(dict):
         :rtype: Decimal
         """
 
-        return sum([odds.to_percentage() for odds in self.values()])
+        return sum(odds.to_percentage() for odds in self.values())
 
     @property
     def overround_per_runner(self) -> Decimal:
