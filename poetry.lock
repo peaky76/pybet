@@ -614,13 +614,13 @@ files = [
 
 [[package]]
 name = "peak-utility"
-version = "0.6.0"
+version = "0.6.1"
 description = "A library of utilities, created by peaky76"
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "peak_utility-0.6.0-py3-none-any.whl", hash = "sha256:d72f5329ed16c0c313be46a4549e55d38c4d12f23cb8251ed71ba87090640f0b"},
-    {file = "peak_utility-0.6.0.tar.gz", hash = "sha256:dce4d018cb149aa9403d6b2511ff8c0fefb4bd99b4a287d21b85d9c1752c0406"},
+    {file = "peak_utility-0.6.1-py3-none-any.whl", hash = "sha256:0cc7b3d722323ca51c4568e0205bf81cae25c3ea7b22b117f1b50ec13f4ef917"},
+    {file = "peak_utility-0.6.1.tar.gz", hash = "sha256:344bbc3fc9270acf09a6603a6f6254da140b69538e6239cf0a1cf64daf198660"},
 ]
 
 [package.dependencies]
