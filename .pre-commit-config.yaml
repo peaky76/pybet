@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: ruff-format
         name: ruff format
-        stages: [commit]
+        stages: [pre-commit]
         language: system
         entry: bash -c 'poetry run ruff format pybet --preview && git add .'
         pass_filenames: false
