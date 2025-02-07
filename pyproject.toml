@@ -16,7 +16,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.11"
-peak-utility = ">=0.5,<0.7"
+peak-utility = "^0.7.0"
 
 [tool.poetry.group.dev.dependencies]
 auto-changelog = "^0.6.0"
