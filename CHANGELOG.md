@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The versioning refers to the versions on pypi
 
+## [0.8.4] (2025-02-07)
+
+#### Others
+
+* migrate `pre-commit` config
+* manual bump of `peak-utility`
+
 ## [0.8.3] (2024-10-08)
 
 #### Others
