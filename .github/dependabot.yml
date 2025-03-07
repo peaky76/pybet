@@ -12,6 +12,9 @@ updates:
       - peaky76
     labels:
       - "dependencies"
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
