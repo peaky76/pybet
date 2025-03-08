@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import UserDict
 from decimal import Decimal
 from functools import reduce
 from itertools import permutations
@@ -9,7 +10,7 @@ from typing import Any
 from .odds import Odds
 
 
-class Market(dict):
+class Market(UserDict):
     """A betting market represented by a dictionary of runners and odds
 
     Attributes:
